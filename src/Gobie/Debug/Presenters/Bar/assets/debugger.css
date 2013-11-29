@@ -1,0 +1,495 @@
+/* Posune stránku, aby pod toolbarem nic nezůstalo */
+body {
+    margin-top: 30px;
+}
+
+/* Toolbar */
+#debug_toolbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: #dadada;
+    background-image: linear-gradient(bottom, #eceaee 0%, #ebe9ed 100%);
+    color: #333;
+    padding: 5px 5px 0 5px;
+    font: normal 12px/14px Arial;
+    z-index: 99999;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+    border-bottom: 1px solid #aaa;
+}
+
+#debug_toolbar_menu {
+    padding: 7px 7px 0 7px;
+    margin: -5px -5px 0 -5px;
+}
+
+#debug_toolbar_messages {
+    width: 100%;
+    max-height: 90vh;
+    color: #000;
+    display: none;
+    overflow: auto;
+    font-family: monospace;
+    border-bottom: 1px solid #bbb;
+}
+
+#debug_toolbar_bottom {
+    width: 100%;
+    height: 8px;
+    margin-left: -5px;
+    padding: 0 5px;
+}
+
+#debug_toolbar_status {
+    float: left;
+    width: 4%;
+    font-weight: bold;
+    /*	pro kompaktnost zavřené lišty */
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.65);
+    /*  emboss effect :) */
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6);
+    margin-left: 3px;
+    margin-right: 3px;
+}
+
+#debug_toolbar_status:hover {
+    /* chrome button design */
+    border: 1px solid #ccc;
+    margin: -5px 2px -6px -3px;
+    padding: 4px 0 5px 5px;
+    background-image: linear-gradient(bottom, #dadada 0%, #f0f0f0 100%);
+}
+
+#debug_toolbar_actions {
+    float: left;
+    width: 5%;
+    line-height: 18px;
+    display: none;
+    font-size: 18px;
+}
+
+#debug_toolbar_filter {
+    float: left;
+    display: none;
+}
+
+#debug_toolbar_paging {
+    float: right;
+    display: none;
+    border-left: 1px solid #bbb;
+    padding-left: 8px;
+    height: 16px;
+}
+
+/* Paging */
+#debug_toolbar_paging select {
+    width: 50px;
+    height: 18px;
+    font-size: 11px;
+    color: #FFF;
+    background-color: #797979;
+    border: 1px solid #ccc;
+    position: relative;
+    top: -1px;
+    padding: 0;
+}
+
+#debug_toolbar a {
+    color: #444 !important;
+    text-decoration: underline;
+}
+
+#debug_toolbar a:hover {
+    color: rgba(0, 0, 0, 0.5) !important;
+}
+
+#debug_toolbar .active a {
+    color: #f4f4f4 !important;
+    text-decoration: underline;
+}
+
+/* Filtr */
+#debug_toolbar_filter span.filter {
+    margin: 0 1px;
+    padding: 3px 5px 2px 5px;
+    text-decoration: none;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-bottom: 0;
+    border-radius: 5px 5px 0 0;
+    color: #000;
+    background-color: #FFF;
+    display: inline-block;
+}
+
+#debug_toolbar_filter span.filter.active, #debug_toolbar_filter span.filter:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+    position: relative;
+    color: #FFF;
+}
+
+#debug_toolbar span.active:hover .filter_sql_query {
+    display: block;
+}
+
+#debug_toolbar .filter_sql_query {
+    background-color: rgba(0, 0, 0, 0.5);
+    border: 1px solid #000;
+    border-top: 0;
+    border-radius: 0 0 5px 5px;
+    color: white;
+    font-size: 10px;
+    line-height: 10px;
+    position: absolute;
+    top: 19px;
+    left: -1px;
+    display: none;
+    width: 100%;
+    z-index: 1;
+}
+
+#debug_toolbar .filter_sql_query input {
+    float: left;
+    clear: left;
+}
+
+#debug_toolbar .filter_sql_query label {
+    float: left;
+    line-height: 18px;
+}
+
+#debug_toolbar .filter_sql_query .inner_wrapper {
+    margin: 5px;
+    display: table;
+}
+
+/* Obecné */
+#debug_toolbar .border {
+    border: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+#debug_toolbar .clickable {
+    cursor: pointer;
+}
+
+#debug_toolbar .cleaner {
+    clear: both;
+    float: none;
+}
+
+#debug_toolbar .clearfix:after {
+    content: "";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
+/* Messages */
+#debug_toolbar .row {
+    margin-bottom: 1px;
+    padding: 2px;
+}
+
+#debug_toolbar .row pre {
+    margin: 0;
+    white-space: pre-wrap;
+}
+
+#debug_toolbar .time {
+    width: 8%;
+    float: right;
+    text-align: right;
+    padding-right: 2%;
+}
+
+#debug_toolbar .content {
+    width: 100%;
+    display: none;
+    margin: 2px 0;
+    clear: both;
+    white-space: pre-wrap;
+    overflow: hidden;
+}
+
+#debug_toolbar .sql {
+    color: #334BFF;
+    float: left;
+    width: 90%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#debug_toolbar .sql_keyword {
+    font-weight: 700;
+    color: #147A09;
+}
+
+/* CallstackMessage */
+#debug_toolbar a.editor {
+    text-decoration: none;
+}
+
+/* Arguments */
+#debug_toolbar .arguments_toggle {
+    text-decoration: none;
+}
+
+#debug_toolbar table {
+    background: none repeat scroll 0 0 rgba(255, 255, 255, 0.5);
+    border-collapse: collapse;
+    width: 100%;
+    margin: 5px 0;
+    font-size: inherit;
+    text-align: inherit;
+}
+
+#debug_toolbar table th, #debug_toolbar table td {
+    border: 1px dotted #AAA;
+    padding: 0.5em;
+    vertical-align: top;
+}
+
+#debug_toolbar table th {
+    font-weight: bold;
+    background-color: rgba(0, 0, 0, 0.03);
+}
+
+#debug_toolbar table th:first-child {
+    width: 13%;
+}
+
+#debug_toolbar table td {
+    text-align: left;
+    vertical-align: top;
+}
+
+/* Box */
+#debug_toolbar .debug_box {
+    border: 2px solid rgba(0, 0, 0, 0.25);
+    position: relative;
+    padding: 0.75em;
+    margin: 5px;
+    overflow: hidden;
+}
+
+#debug_toolbar .debug_box:after {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 5px;
+    background: rgba(0, 0, 0, 0.25);
+    color: #fff;
+    border-radius: 0 0 0 5px;
+}
+
+/* SQL */
+#debug_toolbar .sql_info {
+    background-color: #FFFEC4;
+    color: #334BFF;
+    min-height: 45px;
+}
+
+#debug_toolbar .sql_info:after {
+    content: "sql";
+}
+
+#debug_toolbar .exec_query {
+    position: absolute;
+    right: 3em;
+    top: 0.5em;
+}
+
+/* Profiling */
+#debug_toolbar .sql_profile {
+    background-color: #FFFEDA
+}
+
+#debug_toolbar .sql_profile:after {
+    content: "profile";
+}
+
+/* Cell */
+#debug_toolbar .cell {
+    float: left;
+}
+
+#debug_toolbar .cell.timestamp {
+    width: 9%;
+    text-overflow: ellipsis;
+    overflow-x: hidden;
+}
+
+#debug_toolbar .cell.type {
+    width: 10%;
+    text-overflow: ellipsis;
+    overflow-x: hidden;
+}
+
+#debug_toolbar .cell.message {
+    width: 79%;
+    word-wrap: break-word;
+}
+
+#debug_toolbar .cell.page {
+    width: 2%;
+    text-align: right;
+}
+
+#debug_toolbar .cell.page a {
+    text-decoration: none;
+}
+
+/* Messages */
+#debug_toolbar .e_error, #debug_toolbar .e_core_error, #debug_toolbar .e_compile_error, #debug_toolbar .exception {
+    background-color: #FF7777 !important;
+}
+
+#debug_toolbar .e_warning, #debug_toolbar .e_core_warning, #debug_toolbar .e_compile_warning {
+    background-color: #FFFA69 !important;
+}
+
+#debug_toolbar .e_notice {
+    background-color: #fffec4 !important;
+}
+
+#debug_toolbar .e_user_error {
+    background-color: #FF7777 !important;
+}
+
+#debug_toolbar .e_user_warning {
+    background-color: #FFFA69 !important;
+}
+
+#debug_toolbar .e_user_notice {
+    background-color: #fffec4 !important;
+}
+
+#debug_toolbar .e_strict {
+    background-color: #f7baff !important;
+}
+
+#debug_toolbar .e_recoverable_error {
+    background-color: #96FF9F !important;
+}
+
+#debug_toolbar .e_deprecated, #debug_toolbar .e_user_deprecated {
+    background-color: #CFF0FF !important;
+}
+
+#debug_toolbar .sql_error {
+    background-color: #FADD91 !important;
+}
+
+#debug_toolbar .sql_query {
+    background-color: #DBF58C !important;
+}
+
+#debug_toolbar .timer {
+    background-color: #D4DFFF !important;
+}
+
+#debug_toolbar .dump {
+    background-color: #E1FFD3 !important;
+}
+
+#debug_toolbar .start {
+    background-color: #E8E8E8 !important;
+}
+
+/* StartMessage - Global variables */
+#debug_toolbar .global_variable {
+    padding: 0 5px;
+    color: #000;
+}
+
+#debug_toolbar .global_variable.active {
+    background-color: rgba(255, 255, 255, 0.5);
+    border: 1px inset rgba(0, 0, 0, 0.15);
+    padding: 1px 4px;
+}
+
+/* Variable dump */
+#debug_toolbar .debug_dumps {
+    counter-increment: dump;
+    background-color: rgba(255, 255, 255, 0.75);
+}
+
+#debug_toolbar .debug_dumps:after {
+    content: "dump #" counter(dump);
+}
+
+#debug_toolbar .debug_dumps.hidden {
+    display: none;
+}
+
+/* Callstack */
+#debug_toolbar .debug_callstack {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding-left: 3em;
+}
+
+#debug_toolbar .debug_callstack:after {
+    content: "callstack";
+}
+
+#debug_toolbar .debug_callstack li {
+    margin: 2px 0;
+}
+
+/* Dump colors */
+#debug_toolbar .dump_arg_expanded {
+    color: #CC05A4;
+}
+
+#debug_toolbar .dump_arg_indent {
+    color: #DFDFDF;
+}
+
+#debug_toolbar .dump_arg_keyword {
+    color: #A2A8C2;
+}
+
+#debug_toolbar .dump_arg_desc {
+    color: #B3B3B3;
+    font-style: italic;
+}
+
+#debug_toolbar .dump_arg_access {
+    color: #B3B3B3;
+    font-style: italic;
+}
+
+#debug_toolbar .dump_arg_string {
+    color: #148B04;
+    word-wrap: break-word;
+}
+
+#debug_toolbar .dump_arg_number {
+    color: #FA0F0F;
+}
+
+#debug_toolbar .dump_arg_bool {
+    color: #334BFF;
+}
+
+#debug_toolbar .dump_arg_null {
+    color: #334BFF;
+}
+
+#debug_toolbar .dump_arg_class {
+    color: #A65B07;
+    font-weight: 700;
+}
+
+#debug_toolbar .dump_arg_interface {
+    color: #D6BC9F;
+    font-weight: 700;
+}
+
+#debug_toolbar .dump_arg_trait {
+    color: #FFB969;
+    font-weight: 700;
+}
