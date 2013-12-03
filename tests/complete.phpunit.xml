@@ -12,7 +12,7 @@
          bootstrap="./bootstrap.php"
 >
     <testsuites>
-        <testsuite name="Full Debugger Test Suite">
+        <testsuite name="Full Debug Test Suite">
             <directory>./Gobie/</directory>
         </testsuite>
     </testsuites>
