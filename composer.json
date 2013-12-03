@@ -16,7 +16,12 @@
     "require-dev": {
         "phpunit/phpunit": "3.7.28"
     },
+    "suggest": {
+        "ext-xhprof": "Hierarchical Profiler for PHP"
+    },
     "autoload": {
-        "psr-0": { "Gobie": "src/" }
+        "psr-0": {
+            "Gobie": "src/"
+        }
     }
 }
