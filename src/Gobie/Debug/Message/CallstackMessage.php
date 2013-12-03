@@ -66,10 +66,11 @@ abstract class CallstackMessage extends Message
      */
     private function dumpTrace($trace)
     {
+        $argsDump = $messageHtml = '';
+
         $message = $this->getTraceMessage($trace);
         if ($message) {
             $argsLink = '()';
-            $argsDump = '';
             if (isset($trace['args']) && $trace['args']) {
                 $onClickAction = ' onclick="Debugger.toggleArguments(this); return false;"';
                 $argCount      = count($trace['args']);
