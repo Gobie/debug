@@ -2,10 +2,12 @@
 
 namespace Gobie\Debug\Message\Sql\Success;
 
+use Gobie\Debug\Message\Sql\AbstractMessage;
+
 /**
  * Abstraktní třída pro zprávy obsahující úspěšný SQL dotaz.
  */
-class SimpleMessage extends \Gobie\Debug\Message\Sql\AbstractMessage
+class SimpleMessage extends AbstractMessage
 {
 
     public function dump()

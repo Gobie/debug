@@ -199,7 +199,7 @@ class Options
      *                 return mysql_errno($resource);
      *             },
      *             'highlighter' => function (\Gobie\Debug\Debug $debug, $resource) {
-     *                 return new \Gobie\Debug\Highlighters\NativeHighlighter($debug);
+     *                 return new \Gobie\Debug\Message\Sql\Highlighters\NativeHighlighter($debug);
      *             }
      *         )
      *     )

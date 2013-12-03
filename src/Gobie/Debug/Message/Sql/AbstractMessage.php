@@ -3,7 +3,7 @@
 namespace Gobie\Debug\Message\Sql;
 
 use Gobie\Debug\Debug;
-use Gobie\Debug\Highlighters\IHighlighter;
+use Gobie\Debug\Message\Sql\Highlighters\IHighlighter;
 use Gobie\Debug\Message\CallstackMessage;
 
 /**

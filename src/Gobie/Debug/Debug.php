@@ -2,12 +2,13 @@
 
 namespace Gobie\Debug;
 
-use Gobie\Debug\Dumpers\IDumperManager;
-use Gobie\Debug\GlobalDumpers\IGlobalDumper;
-use Gobie\Debug\Message\DumpMessage;
+use Gobie\Debug\Message\Dump\DumperManager\IDumperManager;
+use Gobie\Debug\Message\Dump\DumpMessage;
 use Gobie\Debug\Message\ErrorMessage;
 use Gobie\Debug\Message\IMessage;
-use Gobie\Debug\Message\StartMessage;
+use Gobie\Debug\Message\Sql\AbstractMessage;
+use Gobie\Debug\Message\Start\GlobalDumpers\IGlobalDumper;
+use Gobie\Debug\Message\Start\StartMessage;
 use Gobie\Debug\Message\TimerMessage;
 use Gobie\Debug\Presenters\Bar\AjaxTemplate;
 use Gobie\Debug\Presenters\Bar\ITemplate;
@@ -51,7 +52,7 @@ use Gobie\Debug\Presenters\Bar\JsTemplate;
  * $debug->addMessage(new \Gobie\Debug\Message\TimerMessage("test", 1, 10));
  *
  * // Ve Startu se zobrazí "Context"
- * $debug->addGlobalDumper(new \Gobie\Debug\GlobalDumpers\ContextGlobalDumper());
+ * $debug->addGlobalDumper(new \Gobie\Debug\Message\Start\GlobalDumpers\ContextGlobalDumper());
  * </pre>
  *
  * Debugování a profilování SQL dotazů
@@ -91,7 +92,7 @@ use Gobie\Debug\Presenters\Bar\JsTemplate;
  * $debug->getOptions()->get(Options::SHOW_CALLSTACK_SOURCE);
  *
  * // Nastavení DumperManageru
- * $dumperManager = new \Gobie\Debug\Dumpers\DumperManager();
+ * $dumperManager = new \Gobie\Debug\Message\Dump\Dumpers\DumperManager();
  * $dumperManager->addDumper(...);
  * $debug->setDumperManager($dumperManager);
  *
@@ -548,7 +549,7 @@ class Debug
     public function query($sql, $resource, array $timer = null)
     {
         if (!$this->isEnabled()) {
-            return;
+            return null;
         }
 
         static $highlighters = array();
@@ -558,7 +559,7 @@ class Debug
                 continue;
             }
 
-            /** @var $message IMessage */
+            /** @var $message AbstractMessage */
             $message       = null;
             $errorOccurred = call_user_func($mapping['checkCallback'], $resource);
             if ($errorOccurred) {
