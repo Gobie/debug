@@ -7,8 +7,6 @@ use Gobie\Debug\Message\Dump\DumpMessage;
 use Gobie\Debug\Message\ErrorMessage;
 use Gobie\Debug\Message\IMessage;
 use Gobie\Debug\Message\Sql\AbstractMessage;
-use Gobie\Debug\Message\Start\GlobalDumpers\IGlobalDumper;
-use Gobie\Debug\Message\Start\StartMessage;
 use Gobie\Debug\Message\TimerMessage;
 use Gobie\Debug\Presenters\Bar\AjaxTemplate;
 use Gobie\Debug\Presenters\Bar\ITemplate;
@@ -157,15 +155,6 @@ class Debug
     private $messages = array();
 
     /**
-     * Pole dumperů globálně přístupných objektů a struktur.
-     *
-     * Vykreslují se ve zprávě {@see Message\StartMessage}.
-     *
-     * @var array
-     */
-    private $globalDumpers = array();
-
-    /**
      * Je Debug zaplý.
      *
      * @var boolean
@@ -312,10 +301,6 @@ class Debug
         // Spustí globální timer
         $this->timerStart($this->pageTimerName);
 
-        // Zaregistruje Start zprávu
-        $this->addMessage(new StartMessage($this, $this->globalDumpers));
-        unset($this->globalDumpers);
-
         return $this;
     }
 
@@ -358,25 +343,6 @@ class Debug
     public function getTimer()
     {
         return $this->timer;
-    }
-
-    /**
-     * Přidá zprávu do toolbaru.
-     *
-     * Funguje pouze, pokud je Debug zaplý.
-     *
-     * @param IMessage $message Zpráva
-     * @return Debug
-     */
-    public function addMessage(IMessage $message)
-    {
-        if (!$this->isEnabled()) {
-            return $this;
-        }
-
-        $this->messages[] = $message;
-
-        return $this;
     }
 
     /**
@@ -426,26 +392,6 @@ class Debug
     }
 
     /**
-     * Zaregistruje globální dumper do {@see Message\StartMessage} zprávy.
-     *
-     * Funguje pouze, pokud není Debug zaplý.
-     *
-     * @param IGlobalDumper $globalDumper Globální dumper
-     * @return Debug
-     * @throws \LogicException Pokud již byl Debug spuštěn
-     */
-    public function addGlobalDumper(IGlobalDumper $globalDumper)
-    {
-        if ($this->isEnabled()) {
-            throw new \LogicException('Nelze přidat globální dumper, Debug již byl spuštěn.');
-        }
-
-        $this->globalDumpers[] = $globalDumper;
-
-        return $this;
-    }
-
-    /**
      * Dumpne proměnné v argumentu do toolbaru.
      *
      * Pokud bude první argument string a dump bude volán s alespoň 2 argumenty, bere se první argument za název dumpu.
@@ -468,6 +414,25 @@ class Debug
         }
 
         return $this->addMessage(new DumpMessage($this, $name, $argv, $this->getCallstack()));
+    }
+
+    /**
+     * Přidá zprávu do toolbaru.
+     *
+     * Funguje pouze, pokud je Debug zaplý.
+     *
+     * @param IMessage $message Zpráva
+     * @return Debug
+     */
+    public function addMessage(IMessage $message)
+    {
+        if (!$this->isEnabled()) {
+            return $this;
+        }
+
+        $this->messages[] = $message;
+
+        return $this;
     }
 
     /**
