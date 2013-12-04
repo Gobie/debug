@@ -3,7 +3,7 @@
 namespace Gobie\Debug;
 
 use Gobie\Debug\Message\Dump\DumperManager\IDumperManager;
-use Gobie\Debug\Message\Dump\DumpMessage;
+use Gobie\Debug\Message\DumpMessage;
 use Gobie\Debug\Message\ErrorMessage;
 use Gobie\Debug\Message\IMessage;
 use Gobie\Debug\Message\Sql\AbstractMessage;

@@ -1,9 +1,8 @@
 <?php
 
-namespace Gobie\Debug\Message\Dump;
+namespace Gobie\Debug\Message;
 
 use Gobie\Debug\Debug;
-use Gobie\Debug\Message\CallstackMessage;
 
 /**
  * Zpráva obsahující název a dump předaných proměnných s callstackem.
@@ -94,17 +93,17 @@ class DumpMessage extends CallstackMessage
         return $this->name;
     }
 
-    public function getVariables()
-    {
-        return $this->variables;
-    }
-
     /**
      * @return string
      */
     public function getVariableDumps()
     {
         return $this->variableDumps;
+    }
+
+    public function getVariables()
+    {
+        return $this->variables;
     }
 
 
