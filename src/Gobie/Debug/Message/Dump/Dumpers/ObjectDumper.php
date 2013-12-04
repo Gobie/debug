@@ -4,20 +4,31 @@ namespace Gobie\Debug\Message\Dump\Dumpers;
 
 use Gobie\Debug\Helpers;
 use Gobie\Debug\Message\Dump\DumperManager\IDumperManager;
-use Gobie\Debug\Options;
 
 /**
- * Dumper objektů.
+ * Default object dumper.
  */
 class ObjectDumper extends AbstractDumper
 {
+    /**
+     * Bit mask of \ReflectionProperty constants.
+     *
+     * @var integer
+     */
+    protected $skipModifiers;
+
 
     /**
-     * Nastaví typ proménné na 'object'.
+     * Sets type and property modifiers to skip.
+     *
+     * e.g. \ReflectionProperty::IS_PRIVATE | \ReflectionProperty::IS_PROTECTED
+     *
+     * @param integer $skipModifiers Bit mask of \ReflectionProperty constants; defaults to 0 = show all properties.
      */
-    public function __construct()
+    public function __construct($skipModifiers = 0)
     {
         $this->setType(IDumperManager::T_OBJECT);
+        $this->skipModifiers = (int) $skipModifiers;
     }
 
     public function dump(&$var, $level, $depth)
@@ -77,11 +88,10 @@ class ObjectDumper extends AbstractDumper
 
     protected function dumpBody(&$var, $level, $depth, &$out)
     {
-        $indentation   = Helpers::indent($level);
-        $skipModifiers = $this->getManager()->getDebug()->getOptions()->get(Options::SKIP_PROPERTY_MODIFIERS);
+        $indentation = Helpers::indent($level);
 
         $reflector       = new \ReflectionObject($var);
-        $properties      = $reflector->getProperties(~$skipModifiers);
+        $properties      = $reflector->getProperties(~$this->skipModifiers);
         $propertiesCount = count($properties);
         $out[]           = ' <span class="dump_arg_desc">(' . $propertiesCount . ')</span>';
         if (!$propertiesCount) {
@@ -92,7 +102,7 @@ class ObjectDumper extends AbstractDumper
         $out[] = PHP_EOL;
         foreach ($properties as $property) {
             $modifiers = $property->getModifiers();
-            if ($modifiers & $skipModifiers) {
+            if ($modifiers & $this->skipModifiers) {
                 continue;
             }
 

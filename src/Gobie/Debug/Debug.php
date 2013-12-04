@@ -82,8 +82,7 @@ use Gobie\Debug\Presenters\Bar\JsTemplate;
  * // Základní nastavení
  * $debug->getOptions()->set(array(
  *      Options::SHOW_CALLSTACK_SOURCE => true,
- *      Options::IGNORE_ERRORS => E_STRICT | E_DEPRECATED,
- *      Options::SKIP_PROPERTY_MODIFIERS => \ReflectionProperty::IS_PRIVATE
+ *      Options::IGNORE_ERRORS => E_STRICT | E_DEPRECATED
  * ));
  *
  * // Získání nastavení

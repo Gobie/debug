@@ -18,7 +18,6 @@ class Options
         DUMP_BUFFER_ON_FATAL_ERROR = 'dumpBufferOnFatalError',
         IGNORE_ERRORS = 'ignoreErrors',
         IGNORE_EXCEPTIONS = 'ignoreExceptions',
-        SKIP_PROPERTY_MODIFIERS = 'skipPropertyModifiers',
         GLOBAL_DUMP_DEPTH = 'globalDumpDepth',
         CALLSTACK_ARGUMENT_DUMP_DEPTH = 'callstackArgumentDumpDepth',
         HIDE_EMPTY_GLOBAL_DUMPERS = 'hideEmptyGlobalDumpers',
@@ -41,7 +40,6 @@ class Options
         self::DUMP_BUFFER_ON_FATAL_ERROR    => false,
         self::IGNORE_ERRORS                 => 0,
         self::IGNORE_EXCEPTIONS             => array(),
-        self::SKIP_PROPERTY_MODIFIERS       => 0,
         self::GLOBAL_DUMP_DEPTH             => 3,
         self::CALLSTACK_ARGUMENT_DUMP_DEPTH => 2,
         self::HIDE_EMPTY_GLOBAL_DUMPERS     => true,
@@ -126,14 +124,6 @@ class Options
      *
      * <pre>
      * $debug->set(Options::IGNORE_EXCEPTIONS, array('\LogicException', '\InvalidArgumentException'));
-     * </pre>
-     *
-     * <strong>SKIP_PROPERTY_MODIFIERS</strong>
-     *
-     * Nastaví bitovou masku nezobrazovaných atributů objektů při dumpování.
-     *
-     * <pre>
-     * $debug->set(Options::SKIP_PROPERTY_MODIFIERS, \ReflectionProperty::IS_PRIVATE);
      * </pre>
      *
      * <strong>GLOBAL_DUMP_DEPTH</strong>
