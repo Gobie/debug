@@ -123,7 +123,7 @@ class DumperManager implements IDumperManager
             return $out;
         }
 
-        return htmlspecialchars_decode(strip_tags($out, ENT_QUOTES));
+        return htmlspecialchars_decode(strip_tags($out), ENT_QUOTES);
     }
 
     public function getDebug()
