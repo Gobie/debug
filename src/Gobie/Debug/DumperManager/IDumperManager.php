@@ -5,42 +5,37 @@ namespace Gobie\Debug\DumperManager;
 use Gobie\Debug\Dumpers\IDumper;
 
 /**
- * Rozhraní manažeru pro dumpování proměnných.
+ * DumperManager interface.
  */
 interface IDumperManager
 {
-    const T_BOOLEAN = 'boolean';
-
-    const T_INTEGER = 'integer';
-
-    const T_DOUBLE = 'double';
-
-    const T_STRING = 'string';
-
-    const T_ARRAY = 'array';
-
-    const T_OBJECT = 'object';
-
-    const T_RESOURCE = 'resource';
-
-    const T_NULL = 'NULL';
-
-    const T_UNKNOWN = 'unknown type';
+    /**
+     * Known variable types.
+     */
+    const
+        T_BOOLEAN = 'boolean',
+        T_INTEGER = 'integer',
+        T_DOUBLE = 'double',
+        T_STRING = 'string',
+        T_ARRAY = 'array',
+        T_OBJECT = 'object',
+        T_RESOURCE = 'resource',
+        T_NULL = 'NULL',
+        T_UNKNOWN = 'unknown type';
 
     /**
-     * Zaregistruje Dumper dle jeho nastavení.
+     * Adds dumper.
      *
      * @param IDumper $dumper Dumper
-     * @return self
      */
     public function addDumper(IDumper $dumper);
 
     /**
-     * Dumpne proměnnou.
+     * Dumps any kind of variable to string representation using corresponding Dumper.
      *
-     * @param mixed   $var   Proměnná
-     * @param integer $level Počáteční odsazení
-     * @param integer $depth Maximální hloubka zanoření objektů výpisu
+     * @param mixed   $var   Variable
+     * @param integer $level Current level of indentation
+     * @param integer $depth Max depth of variable dump
      * @return string
      */
     public function dump($var, $level, $depth);

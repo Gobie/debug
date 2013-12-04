@@ -5,9 +5,9 @@ namespace Gobie\Debug\DumperManager;
 use Gobie\Debug\Dumpers\IDumper;
 
 /**
- * Manažer pro dumpování proměnných.
+ * DumperManager for variables.
  *
- * Povolené typy:
+ * Allowed types:
  * <pre>
  * boolean
  * integer
@@ -20,63 +20,83 @@ use Gobie\Debug\Dumpers\IDumper;
  * unknown type
  * </pre>
  *
- * Vytvoření a nastavení objektu.
+ * DumperManager initialization.
  * <code>
  * $dumperManager = new \Gobie\Debug\Dumpers\DumperManager();
+ * $dumperManager->addDumper(\Gobie\Debug\Dumpers\StringDumper());
+ * $dumperManager->addDumper(\Gobie\Debug\Dumpers\IntegerDumper());
  * $dumperManager->addDumper(\Gobie\Debug\Dumpers\ArrayDumper());
  * </code>
  *
- * Dumpnutí proměnné
+ * Variable dump
  * <code>
- * echo $dumperManager->dump($_SERVER[, $level][, $depth]);
+ * echo $dumperManager->dump($_GET);
  * </code>
  */
 class DumperManager implements IDumperManager
 {
 
     /**
-     * Povolené datové typy.
+     * Allowed data types.
+     *
+     * Array of DumperManager::T_* constants.
      *
      * @var array
      */
-    protected static $allowedTypes = array(
-        self::T_BOOLEAN  => true,
-        self::T_INTEGER  => true,
-        self::T_DOUBLE   => true,
-        self::T_STRING   => true,
-        self::T_ARRAY    => true,
-        self::T_OBJECT   => true,
-        self::T_RESOURCE => true,
-        self::T_NULL     => true,
-        self::T_UNKNOWN  => true
-    );
+    protected $allowedTypes;
 
     /**
-     * Seznam aktuálně namapovaných Dumperů.
+     * List of available dumpers.
      *
      * @var array
      */
-    protected $dumpers = array();
+    protected $dumpers;
 
-    private $isHtml;
+    /**
+     * Output is NOT cli, so hopefully HTML-like with support of CSS & JS.
+     *
+     * @var boolean
+     */
+    protected $isHtml;
 
-    public function __construct()
+    /**
+     * Sets allowedTypes, dumpers and detects CLI/CGI.
+     *
+     * @param IDumper[] $dumpers Array of dumpers
+     */
+    public function __construct(array $dumpers = array())
     {
+        $this->allowedTypes = array_flip(
+            array(
+                 self::T_BOOLEAN,
+                 self::T_INTEGER,
+                 self::T_DOUBLE,
+                 self::T_STRING,
+                 self::T_ARRAY,
+                 self::T_OBJECT,
+                 self::T_RESOURCE,
+                 self::T_NULL,
+                 self::T_UNKNOWN
+            )
+        );
+
         $this->isHtml = PHP_SAPI !== 'cli'
                         && !preg_match('#^Content-Type: (?!text/html)#im', implode("\n", headers_list()));
+
+        $this->dumpers = $dumpers;
     }
 
     /**
      * {@inheritdoc}
-     * @throws \InvalidArgumentException Pokud není typ dumperu jedním z výčtu povolených
+     * @throws \InvalidArgumentException If dumper is not one of allowed types.
      */
     public function addDumper(IDumper $dumper)
     {
         $varTypeArr = $dumper->getType();
 
         foreach ($varTypeArr as $varType) {
-            if (!isset(self::$allowedTypes[$varType])) {
-                throw new \InvalidArgumentException(sprintf('Typ "%s" není povolen.', $varType));
+            if (!isset($this->allowedTypes[$varType])) {
+                throw new \InvalidArgumentException("Type '{$varType}' isn't allowed.");
             }
 
             $dumper->setManager($this);
@@ -90,6 +110,9 @@ class DumperManager implements IDumperManager
         return $this;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function dump($var, $level = 1, $depth = 4)
     {
         $out         = array();
@@ -108,7 +131,7 @@ class DumperManager implements IDumperManager
         }
 
         if (count($out) === 0) {
-            $out[] = 'Pro datový typ "' . $varType . '" není definován žádný Dumper.';
+            $out[] = "There is no registered dumper for type '{$varType}'.";
         }
 
         if ($this->isHtml) {
