@@ -18,7 +18,7 @@ use Gobie\Debug\Presenters\Bar\JsTemplate;
  * Správa Debugu
  * <pre>
  * // Získání instance
- * $debug = \Gobie\Debug\Debug::getInstance();
+ * $debug = new \Gobie\Debug\Debug($options);
  *
  * // Zapnutí
  * $debug->enable();
@@ -141,13 +141,6 @@ class Debug
     );
 
     /**
-     * Instance Debugu.
-     *
-     * @var Debug
-     */
-    private static $instance;
-
-    /**
      * Pole všech zpráv.
      *
      * @var array
@@ -206,14 +199,14 @@ class Debug
     private $options;
 
     /**
-     * Privátní konstruktor kvůli Singletonu.
+     * Sets default template.
      */
-    private function __construct(Options $options)
+    public function __construct(Options $options)
     {
         $this->timer   = new Timer();
         $this->options = $options;
 
-        // Nastaví výchozí šablonu
+        // Sets default template.
         $this->setTemplate($this->getOptions()->get(Options::IS_AJAX) ? new AjaxTemplate() : new JsTemplate());
     }
 
@@ -225,16 +218,6 @@ class Debug
     public function getOptions()
     {
         return $this->options;
-    }
-
-    /**
-     * Vrátí unikátní instanci Debugu na stránce.
-     *
-     * @return Debug
-     */
-    public static function getInstance(Options $options)
-    {
-        return self::$instance ? : self::$instance = new self($options);
     }
 
     /**
