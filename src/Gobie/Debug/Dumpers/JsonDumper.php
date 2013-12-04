@@ -1,6 +1,6 @@
 <?php
 
-namespace Gobie\Debug\Message\Dump\Dumpers;
+namespace Gobie\Debug\Dumpers;
 
 use Gobie\Debug\Helpers;
 
@@ -13,8 +13,8 @@ class JsonDumper extends StringDumper
     public function getReplacedClasses()
     {
         return array(
-            '\Gobie\Debug\Message\Dump\Dumpers\StringDumper' => true,
-            '\Gobie\Debug\Message\Dump\Dumpers\FormattedTextDumper' => true
+            '\Gobie\Debug\Dumpers\StringDumper' => true,
+            '\Gobie\Debug\Dumpers\FormattedTextDumper' => true
         );
     }
 

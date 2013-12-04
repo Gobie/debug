@@ -1,6 +1,6 @@
 <?php
 
-namespace Gobie\Debug\Message\Dump\Dumpers;
+namespace Gobie\Debug\Dumpers;
 
 use Gobie\Debug\Helpers;
 
@@ -13,7 +13,7 @@ class DomNodeListDumper extends ObjectDumper
     public function getReplacedClasses()
     {
         return array(
-            '\Gobie\Debug\Message\Dump\Dumpers\ObjectDumper' => true
+            '\Gobie\Debug\Dumpers\ObjectDumper' => true
         );
     }
 

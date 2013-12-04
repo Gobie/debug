@@ -1,8 +1,8 @@
 <?php
 
-namespace Gobie\Debug\Message\Dump\DumperManager;
+namespace Gobie\Debug\DumperManager;
 
-use Gobie\Debug\Message\Dump\Dumpers\IDumper;
+use Gobie\Debug\Dumpers\IDumper;
 
 /**
  * Manažer pro dumpování proměnných.
@@ -22,8 +22,8 @@ use Gobie\Debug\Message\Dump\Dumpers\IDumper;
  *
  * Vytvoření a nastavení objektu.
  * <code>
- * $dumperManager = new \Gobie\Debug\Message\Dump\Dumpers\DumperManager();
- * $dumperManager->addDumper(\Gobie\Debug\Message\Dump\Dumpers\ArrayDumper());
+ * $dumperManager = new \Gobie\Debug\Dumpers\DumperManager();
+ * $dumperManager->addDumper(\Gobie\Debug\Dumpers\ArrayDumper());
  * </code>
  *
  * Dumpnutí proměnné

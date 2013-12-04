@@ -1,9 +1,9 @@
 <?php
 
-namespace Gobie\Debug\Message\Dump\Dumpers;
+namespace Gobie\Debug\Dumpers;
 
 use Gobie\Debug\Helpers;
-use Gobie\Debug\Message\Dump\DumperManager\IDumperManager;
+use Gobie\Debug\DumperManager\IDumperManager;
 
 /**
  * Dumper resource.

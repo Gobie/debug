@@ -2,7 +2,7 @@
 
 namespace Gobie\Debug;
 
-use Gobie\Debug\Message\Dump\DumperManager\IDumperManager;
+use Gobie\Debug\DumperManager\IDumperManager;
 use Gobie\Debug\Message\DumpMessage;
 use Gobie\Debug\Message\ErrorMessage;
 use Gobie\Debug\Message\IMessage;
@@ -89,7 +89,7 @@ use Gobie\Debug\Presenters\Bar\JsTemplate;
  * $debug->getOptions()->get(Options::SHOW_CALLSTACK_SOURCE);
  *
  * // Nastavení DumperManageru
- * $dumperManager = new \Gobie\Debug\Message\Dump\Dumpers\DumperManager();
+ * $dumperManager = new \Gobie\Debug\Dumpers\DumperManager();
  * $dumperManager->addDumper(...);
  * $debug->setDumperManager($dumperManager);
  *

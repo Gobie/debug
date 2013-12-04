@@ -1,6 +1,6 @@
 <?php
 
-namespace Gobie\Debug\Message\Dump\Dumpers;
+namespace Gobie\Debug\Dumpers;
 
 use Gobie\Debug\Helpers;
 
@@ -47,7 +47,7 @@ class SQLDumper extends StringDumper
     public function getReplacedClasses()
     {
         return array(
-            '\Gobie\Debug\Message\Dump\Dumpers\StringDumper' => true
+            '\Gobie\Debug\Dumpers\StringDumper' => true
         );
     }
 

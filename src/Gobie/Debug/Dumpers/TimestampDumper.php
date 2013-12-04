@@ -1,9 +1,9 @@
 <?php
 
-namespace Gobie\Debug\Message\Dump\Dumpers;
+namespace Gobie\Debug\Dumpers;
 
 use Gobie\Debug\Helpers;
-use Gobie\Debug\Message\Dump\DumperManager\IDumperManager;
+use Gobie\Debug\DumperManager\IDumperManager;
 
 /**
  * Dumper timestampu.
@@ -22,8 +22,8 @@ class TimestampDumper extends AbstractDumper
     public function getReplacedClasses()
     {
         return array(
-            '\Gobie\Debug\Message\Dump\Dumpers\StringDumper'  => true,
-            '\Gobie\Debug\Message\Dump\Dumpers\IntegerDumper' => true
+            '\Gobie\Debug\Dumpers\StringDumper'  => true,
+            '\Gobie\Debug\Dumpers\IntegerDumper' => true
         );
     }
 

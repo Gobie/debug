@@ -1,6 +1,6 @@
 <?php
 
-namespace Gobie\Debug\Message\Dump\Dumpers;
+namespace Gobie\Debug\Dumpers;
 
 use Gobie\Debug\Helpers;
 
@@ -12,7 +12,7 @@ class TwoDimensionalArrayDumper extends ArrayDumper
     public function getReplacedClasses()
     {
         return array(
-            '\Gobie\Debug\Message\Dump\Dumpers\ArrayDumper' => true
+            '\Gobie\Debug\Dumpers\ArrayDumper' => true
         );
     }
 

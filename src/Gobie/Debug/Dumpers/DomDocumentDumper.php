@@ -1,19 +1,19 @@
 <?php
 
-namespace Gobie\Debug\Message\Dump\Dumpers;
+namespace Gobie\Debug\Dumpers;
 
 use Gobie\Debug\Helpers;
 
 /**
- * Dumper DOMNode.
+ * Dumper DOMDocument.
  */
-class DomNodeDumper extends ObjectDumper
+class DomDocumentDumper extends ObjectDumper
 {
 
     public function getReplacedClasses()
     {
         return array(
-            '\Gobie\Debug\Message\Dump\Dumpers\ObjectDumper' => true
+            '\Gobie\Debug\Dumpers\ObjectDumper' => true
         );
     }
 
@@ -21,12 +21,9 @@ class DomNodeDumper extends ObjectDumper
     {
         $indentation = Helpers::indent($level);
 
-        $dom               = new \DOMDocument();
+        $dom               = clone $var;
         $dom->formatOutput = true;
-        $node              = $dom->importNode($var, true);
-        $dom->appendChild($node);
-
-        $xml = Helpers::escape(trim($dom->saveXML($node)));
+        $xml               = Helpers::escape(trim($dom->saveXML()));
 
         $out[] = PHP_EOL . Helpers::wrapLines($xml, $indentation . '<span class="dump_arg_expanded">', '</span>');
 
@@ -35,6 +32,6 @@ class DomNodeDumper extends ObjectDumper
 
     protected function verifyCustomCondition($var)
     {
-        return $var instanceof \DOMNode && !($var instanceof \DOMDocument);
+        return $var instanceof \DOMDocument;
     }
 }

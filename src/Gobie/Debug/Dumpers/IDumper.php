@@ -1,7 +1,7 @@
 <?php
 
-namespace Gobie\Debug\Message\Dump\Dumpers;
-use Gobie\Debug\Message\Dump\DumperManager\IDumperManager;
+namespace Gobie\Debug\Dumpers;
+use Gobie\Debug\DumperManager\IDumperManager;
 
 /**
  * Rozhraní pro dumper.

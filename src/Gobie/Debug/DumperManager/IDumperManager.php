@@ -1,8 +1,8 @@
 <?php
 
-namespace Gobie\Debug\Message\Dump\DumperManager;
+namespace Gobie\Debug\DumperManager;
 
-use Gobie\Debug\Message\Dump\Dumpers\IDumper;
+use Gobie\Debug\Dumpers\IDumper;
 
 /**
  * Rozhraní manažeru pro dumpování proměnných.

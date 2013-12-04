@@ -1,9 +1,9 @@
 <?php
 
-namespace Gobie\Debug\Message\Dump\Dumpers;
+namespace Gobie\Debug\Dumpers;
 
-use Gobie\Debug\Message\Dump\DumperManager\DumperManager;
-use Gobie\Debug\Message\Dump\DumperManager\IDumperManager;
+use Gobie\Debug\DumperManager\DumperManager;
+use Gobie\Debug\DumperManager\IDumperManager;
 
 /**
  * Abstraktní třída pro všechny dumpery.
