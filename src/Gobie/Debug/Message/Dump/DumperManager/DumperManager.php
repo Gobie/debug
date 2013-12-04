@@ -2,7 +2,6 @@
 
 namespace Gobie\Debug\Message\Dump\DumperManager;
 
-use Gobie\Debug\Debug;
 use Gobie\Debug\Message\Dump\Dumpers\IDumper;
 
 /**
@@ -61,13 +60,6 @@ class DumperManager implements IDumperManager
 
     private $isHtml;
 
-    /**
-     * Debug.
-     *
-     * @var Debug
-     */
-    private $debug;
-
     public function __construct()
     {
         $this->isHtml = PHP_SAPI !== 'cli'
@@ -124,17 +116,5 @@ class DumperManager implements IDumperManager
         }
 
         return htmlspecialchars_decode(strip_tags($out), ENT_QUOTES);
-    }
-
-    public function getDebug()
-    {
-        return $this->debug;
-    }
-
-    public function setDebug(Debug $debug)
-    {
-        $this->debug = $debug;
-
-        return $this;
     }
 }

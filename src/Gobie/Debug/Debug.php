@@ -367,7 +367,6 @@ class Debug
      */
     public function setDumperManager(IDumperManager $dumperManager)
     {
-        $dumperManager->setDebug($this);
         $this->dumperManager = $dumperManager;
 
         return $this;

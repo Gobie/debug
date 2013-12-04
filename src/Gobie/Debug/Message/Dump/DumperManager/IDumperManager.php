@@ -2,7 +2,6 @@
 
 namespace Gobie\Debug\Message\Dump\DumperManager;
 
-use Gobie\Debug\Debug;
 use Gobie\Debug\Message\Dump\Dumpers\IDumper;
 
 /**
@@ -45,19 +44,4 @@ interface IDumperManager
      * @return string
      */
     public function dump($var, $level, $depth);
-
-    /**
-     * Vrátí Debug.
-     *
-     * @return Debug
-     */
-    public function getDebug();
-
-    /**
-     * Nastaví Debug.
-     *
-     * @param Debug $debug Debug.
-     * @return self
-     */
-    public function setDebug(Debug $debug);
 }
