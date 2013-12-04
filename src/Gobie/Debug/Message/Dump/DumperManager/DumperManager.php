@@ -92,7 +92,7 @@ class DumperManager implements IDumperManager
 
     public function dump($var, $level = 1, $depth = 4)
     {
-        $out         = null;
+        $out         = array();
         $varType     = gettype($var);
         $dumpers     = isset($this->dumpers[$varType]) ? $this->dumpers[$varType] : array();
         $usedDumpers = array();
@@ -103,18 +103,18 @@ class DumperManager implements IDumperManager
                 continue;
             }
 
-            $out .= $dumper->dump($var, $level, $depth);
+            $out[]       = $dumper->dump($var, $level, $depth);
             $usedDumpers = array_merge($usedDumpers, $dumper->getReplacedClasses());
         }
 
-        if ($out === null) {
-            $out = sprintf('Pro datový typ "%s" není definován žádný Dumper.', $varType);
+        if (count($out) === 0) {
+            $out[] = 'Pro datový typ "' . $varType . '" není definován žádný Dumper.';
         }
 
         if ($this->isHtml) {
-            return $out;
+            return implode('', $out);
         }
 
-        return htmlspecialchars_decode(strip_tags($out), ENT_QUOTES);
+        return htmlspecialchars_decode(strip_tags(implode('', $out)), ENT_QUOTES);
     }
 }
