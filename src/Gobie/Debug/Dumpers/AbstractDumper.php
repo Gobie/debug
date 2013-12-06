@@ -2,7 +2,6 @@
 
 namespace Gobie\Debug\Dumpers;
 
-use Gobie\Debug\DumperManager\DumperManager;
 use Gobie\Debug\DumperManager\IDumperManager;
 
 /**
@@ -15,14 +14,14 @@ abstract class AbstractDumper implements IDumper
      * Typ proměnné, pro kterou je tento objekt registrován.
      *
      * @var string
-     * @see DumperManager::$allowedTypes
+     * @see IDumperManager
      */
     private $varType = IDumperManager::T_UNKNOWN;
 
     /**
      * Manažer zpracování pro dumpování.
      *
-     * @var DumperManager
+     * @var IDumperManager
      */
     private $manager;
 
