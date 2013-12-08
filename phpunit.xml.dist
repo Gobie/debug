@@ -13,13 +13,13 @@
 >
     <testsuites>
         <testsuite name="Full Debug Test Suite">
-            <directory>./tests/Gobie/</directory>
+            <directory suffix=".php">./tests/Gobie</directory>
         </testsuite>
     </testsuites>
 
     <filter>
         <whitelist>
-            <directory>./src/Gobie/</directory>
+            <directory suffix=".php">./src/Gobie</directory>
         </whitelist>
     </filter>
 </phpunit>

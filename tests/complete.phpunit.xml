@@ -10,16 +10,16 @@
          stopOnFailure="false"
          syntaxCheck="false"
          bootstrap="./bootstrap.php"
->
+        >
     <testsuites>
         <testsuite name="Full Debug Test Suite">
-            <directory>./Gobie/</directory>
+            <directory suffix=".php">./Gobie</directory>
         </testsuite>
     </testsuites>
 
     <filter>
         <whitelist>
-            <directory>../src/Gobie/</directory>
+            <directory suffix=".php">../src/Gobie</directory>
         </whitelist>
     </filter>
 </phpunit>
