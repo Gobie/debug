@@ -53,10 +53,10 @@ abstract class AbstractDumper implements IDumper
         return array_flip($this->varType);
     }
 
-    public function verify($var, $varType, array $usedDumperClasses = array())
+    public function verify($var, $varType, array $replacedClasses = array())
     {
         return isset($this->varType[$varType])
-               && !isset($usedDumperClasses['\\' . get_class($this)])
+               && !isset($replacedClasses['\\' . get_class($this)])
                && $this->verifyCustomCondition($var);
     }
 

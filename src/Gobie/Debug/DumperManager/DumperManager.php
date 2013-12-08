@@ -7,7 +7,7 @@ use Gobie\Debug\Dumpers\IDumper;
 /**
  * DumperManager for variables.
  *
- * Allowed types:
+ * Known types:
  * <pre>
  * boolean
  * integer
@@ -37,13 +37,23 @@ class DumperManager implements IDumperManager
 {
 
     /**
-     * Allowed data types.
+     * Known data types.
      *
      * Array of DumperManager::T_* constants.
      *
      * @var array
      */
-    protected $allowedTypes;
+    protected $knownTypes = array(
+        self::T_BOOLEAN  => true,
+        self::T_INTEGER  => true,
+        self::T_DOUBLE   => true,
+        self::T_STRING   => true,
+        self::T_ARRAY    => true,
+        self::T_OBJECT   => true,
+        self::T_RESOURCE => true,
+        self::T_NULL     => true,
+        self::T_UNKNOWN  => true
+    );
 
     /**
      * List of available dumpers.
@@ -60,49 +70,45 @@ class DumperManager implements IDumperManager
     protected $isHtml;
 
     /**
-     * Sets allowedTypes, dumpers and detects CLI/CGI.
+     * Sets known types, dumpers and detects CLI/CGI.
      *
-     * @param IDumper[] $dumpers Array of dumpers
+     * @param array $dumpers Array of dumpers
      */
     public function __construct(array $dumpers = array())
     {
-        $this->allowedTypes = array_flip(
-            array(
-                 self::T_BOOLEAN,
-                 self::T_INTEGER,
-                 self::T_DOUBLE,
-                 self::T_STRING,
-                 self::T_ARRAY,
-                 self::T_OBJECT,
-                 self::T_RESOURCE,
-                 self::T_NULL,
-                 self::T_UNKNOWN
-            )
-        );
-
         $this->isHtml = PHP_SAPI !== 'cli'
                         && !preg_match('#^Content-Type: (?!text/html)#im', implode("\n", headers_list()));
 
-        $this->dumpers = $dumpers;
+        foreach ($dumpers as $dumper) {
+            $this->addDumper($dumper);
+        }
+
     }
 
     /**
      * {@inheritdoc}
-     * @throws \InvalidArgumentException If dumper is not one of allowed types.
+     * @throws \InvalidArgumentException If dumper is not one of known types.
      */
     public function addDumper(IDumper $dumper)
     {
         $varTypeArr = $dumper->getType();
 
+        if (!is_array($varTypeArr)) {
+            throw new \InvalidArgumentException("IDumper::getType must return array of types it can dump.");
+        }
+
         foreach ($varTypeArr as $varType) {
-            if (!isset($this->allowedTypes[$varType])) {
-                throw new \InvalidArgumentException("Type '{$varType}' isn't allowed.");
+            if (!isset($this->knownTypes[$varType])) {
+                throw new \InvalidArgumentException("Type '{$varType}' is unknown.");
             }
 
             $dumper->setManager($this);
 
             if (!isset($this->dumpers[$varType])) {
                 $this->dumpers[$varType] = array();
+            }
+            if (in_array($dumper, $this->dumpers[$varType], true)) {
+                break;
             }
             $this->dumpers[$varType][] = $dumper;
         }
@@ -113,25 +119,41 @@ class DumperManager implements IDumperManager
     /**
      * {@inheritdoc}
      */
+    public function getDumpers()
+    {
+        $out = array();
+        array_walk_recursive(
+            $this->dumpers,
+            function ($value) use (&$out) {
+                $out[] = $value;
+            }
+        );
+
+        return $out;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function dump($var, $level = 1, $depth = 4)
     {
-        $out         = array();
-        $varType     = gettype($var);
-        $dumpers     = isset($this->dumpers[$varType]) ? $this->dumpers[$varType] : array();
-        $usedDumpers = array();
+        $out             = array();
+        $varType         = gettype($var);
+        $dumpers         = isset($this->dumpers[$varType]) ? $this->dumpers[$varType] : array();
+        $replacedClasses = array();
 
         /** @var $dumper IDumper */
         foreach ($dumpers as $dumper) {
-            if (!$dumper->verify($var, $varType, $usedDumpers)) {
+            if (!$dumper->verify($var, $varType, $replacedClasses)) {
                 continue;
             }
 
-            $out[]       = $dumper->dump($var, $level, $depth);
-            $usedDumpers = array_merge($usedDumpers, $dumper->getReplacedClasses());
+            $out[] = $dumper->dump($var, $level, $depth);
+            $replacedClasses += $dumper->getReplacedClasses();
         }
 
         if (count($out) === 0) {
-            $out[] = "There is no registered dumper for type '{$varType}'.";
+            throw new \RuntimeException("There is no registered dumper for type '{$varType}'.");
         }
 
         if ($this->isHtml) {

@@ -31,6 +31,13 @@ interface IDumperManager
     public function addDumper(IDumper $dumper);
 
     /**
+     * Returns all added dumpers.
+     *
+     * @return array
+     */
+    public function getDumpers();
+
+    /**
      * Dumps any kind of variable to string representation using corresponding Dumper.
      *
      * @param mixed   $var   Variable

@@ -54,10 +54,10 @@ interface IDumper
      *
      * @param mixed  $var         Proměnná
      * @param string $varType     Datový typ proměnné
-     * @param array  $usedDumperClasses Použité dumpery
+     * @param array $replacedClasses Použité dumpery
      * @return boolean
      */
-    public function verify($var, $varType, array $usedDumperClasses = array());
+    public function verify($var, $varType, array $replacedClasses = array());
 
 
     /**
