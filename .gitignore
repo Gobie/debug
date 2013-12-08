@@ -1,8 +1,6 @@
-/.settings
-/.project
-/.buildpath
-/vendor
+/.idea
+/.vagrant
 /nbproject
-.vagrant
+/vendor
+phpunit.xml
 Vagrantfile
-.idea
