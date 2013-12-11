@@ -6,12 +6,14 @@ use Gobie\Debug\DumperManager\DumperManager;
 use Gobie\Debug\DumperManager\IDumperManager;
 
 /**
- * Class DumperManagerTest.
+ * Test for DumperManager.
  */
 class DumperManagerTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
+     * Dump with no registered Dumpers should throw \RuntimeException.
+     *
      * @expectedException \RuntimeException
      * @expectedExceptionMessage There is no registered dumper for type 'string'.
      */
@@ -22,50 +24,39 @@ class DumperManagerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \PHPUnit_Framework_Error
-     */
-    public function testAddingInvalidTypeDumpers()
-    {
-        $dumperManager = new DumperManager();
-        $dumperManager->addDumper(new \stdClass());
-    }
-
-    /**
+     * Dumper with invalid type should throw \InvalidArgumentException.
+     *
      * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage IDumper::getType must return array of types it can dump.
      */
     public function testAddingDumperWithInvalidType()
     {
-        $dumperMock = self::getMock('\Gobie\Debug\Dumpers\IDumper');
-        $dumperMock->expects($this->exactly(1))
-                   ->method('getType')
-                   ->will($this->returnValue(null));
+        $dumperMock = $this->createIDumperWithGetType(1, null);
 
         $dumperManager = new DumperManager();
         $dumperManager->addDumper($dumperMock);
     }
 
     /**
+     * Dumper with unknown type should throw \InvalidArgumentException.
+     *
      * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage Type 'test' is unknown.
      */
     public function testAddingDumperWithUnknownType()
     {
-        $dumperMock = self::getMock('\Gobie\Debug\Dumpers\IDumper');
-        $dumperMock->expects($this->exactly(1))
-                   ->method('getType')
-                   ->will($this->returnValue(array('test')));
+        $dumperMock = $this->createIDumperWithGetType(1, array('test'));
 
         $dumperManager = new DumperManager();
         $dumperManager->addDumper($dumperMock);
     }
 
+    /**
+     * Dumper must be registered only once.
+     */
     public function testAddingSameDumperMultipleTimes()
     {
-        $dumperMock = self::getMock('\Gobie\Debug\Dumpers\IDumper');
-        $dumperMock->expects($this->exactly(3))
-                   ->method('getType')
-                   ->will($this->returnValue(array(IDumperManager::T_NULL)));
+        $dumperMock = $this->createIDumperWithGetType(3, array(IDumperManager::T_NULL));
 
         $dumperManager = new DumperManager();
         $dumperManager->addDumper($dumperMock)
@@ -75,17 +66,13 @@ class DumperManagerTest extends \PHPUnit_Framework_TestCase
         self::assertCount(1, $dumperManager->getDumpers());
     }
 
+    /**
+     * Multiple dumpers can be set through constructor or setter.
+     */
     public function testAddingMultipleDumpers()
     {
-        $dumperMock1 = self::getMock('\Gobie\Debug\Dumpers\IDumper');
-        $dumperMock1->expects($this->exactly(1))
-                    ->method('getType')
-                    ->will($this->returnValue(array(IDumperManager::T_NULL)));
-
-        $dumperMock2 = self::getMock('\Gobie\Debug\Dumpers\IDumper');
-        $dumperMock2->expects($this->exactly(1))
-                    ->method('getType')
-                    ->will($this->returnValue(array(IDumperManager::T_BOOLEAN)));
+        $dumperMock1 = $this->createIDumperWithGetType();
+        $dumperMock2 = $this->createIDumperWithGetType();
 
         $dumperManager = new DumperManager(array($dumperMock1));
         $dumperManager->addDumper($dumperMock2);
@@ -94,15 +81,14 @@ class DumperManagerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Dumper must verify against given data or else is skipped.
+     *
      * @expectedException \RuntimeException
      * @expectedExceptionMessage There is no registered dumper for type 'NULL'.
      */
     public function testUnverifiableDumpers()
     {
-        $dumperMock = self::getMock('\Gobie\Debug\Dumpers\IDumper');
-        $dumperMock->expects($this->exactly(1))
-                   ->method('getType')
-                   ->will($this->returnValue(array(IDumperManager::T_NULL)));
+        $dumperMock = $this->createIDumperWithGetType();
         $dumperMock->expects($this->exactly(1))
                    ->method('verify')
                    ->will($this->returnValue(false));
@@ -112,12 +98,12 @@ class DumperManagerTest extends \PHPUnit_Framework_TestCase
         $dumperManager->dump(null);
     }
 
+    /**
+     * Dump of variable.
+     */
     public function testDumping()
     {
-        $dumperMock = self::getMock('\Gobie\Debug\Dumpers\IDumper');
-        $dumperMock->expects($this->exactly(1))
-                   ->method('getType')
-                   ->will($this->returnValue(array(IDumperManager::T_NULL)));
+        $dumperMock = $this->createIDumperWithGetType();
         $dumperMock->expects($this->exactly(1))
                    ->method('verify')
                    ->will($this->returnValue(true));
@@ -133,5 +119,22 @@ class DumperManagerTest extends \PHPUnit_Framework_TestCase
         $out = $dumperManager->dump(null);
 
         self::assertEquals('NULL', $out);
+    }
+
+    /**
+     * Create IDumper mock for later use.
+     *
+     * @param int   $called      Expected to be called
+     * @param array $returnValue Return value of getType
+     * @return \PHPUnit_Framework_MockObject_MockObject
+     */
+    private function createIDumperWithGetType($called = 1, $returnValue = array(IDumperManager::T_NULL))
+    {
+        $dumperMock = self::getMock('\Gobie\Debug\Dumpers\IDumper');
+        $dumperMock->expects($this->exactly($called))
+                   ->method('getType')
+                   ->will($this->returnValue($returnValue));
+
+        return $dumperMock;
     }
 }
