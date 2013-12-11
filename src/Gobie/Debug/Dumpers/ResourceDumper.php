@@ -2,8 +2,8 @@
 
 namespace Gobie\Debug\Dumpers;
 
-use Gobie\Debug\Helpers;
 use Gobie\Debug\DumperManager\IDumperManager;
+use Gobie\Debug\Helpers;
 
 /**
  * Dumper resource.

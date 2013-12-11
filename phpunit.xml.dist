@@ -10,7 +10,7 @@
          stopOnFailure="false"
          syntaxCheck="false"
          bootstrap="./tests/bootstrap.php"
->
+        >
     <testsuites>
         <testsuite name="Full Debug Test Suite">
             <directory suffix=".php">./tests/Gobie</directory>

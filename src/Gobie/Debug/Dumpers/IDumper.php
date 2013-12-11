@@ -1,6 +1,7 @@
 <?php
 
 namespace Gobie\Debug\Dumpers;
+
 use Gobie\Debug\DumperManager\IDumperManager;
 
 /**
@@ -52,9 +53,9 @@ interface IDumper
     /**
      * Ověří, zda proměnná má být tímto objektem zpracována.
      *
-     * @param mixed  $var         Proměnná
-     * @param string $varType     Datový typ proměnné
-     * @param array $replacedClasses Použité dumpery
+     * @param mixed  $var             Proměnná
+     * @param string $varType         Datový typ proměnné
+     * @param array  $replacedClasses Použité dumpery
      * @return boolean
      */
     public function verify($var, $varType, array $replacedClasses = array());

@@ -3,8 +3,8 @@
 namespace Gobie\Debug\Message\Sql;
 
 use Gobie\Debug\Debug;
-use Gobie\Debug\Message\Sql\Highlighters\IHighlighter;
 use Gobie\Debug\Message\CallstackMessage;
+use Gobie\Debug\Message\Sql\Highlighters\IHighlighter;
 
 /**
  * Třída pro zprávy obsahující SQL dotaz.

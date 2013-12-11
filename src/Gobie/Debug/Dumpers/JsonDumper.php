@@ -13,7 +13,7 @@ class JsonDumper extends StringDumper
     public function getReplacedClasses()
     {
         return array(
-            '\Gobie\Debug\Dumpers\StringDumper' => true,
+            '\Gobie\Debug\Dumpers\StringDumper'        => true,
             '\Gobie\Debug\Dumpers\FormattedTextDumper' => true
         );
     }
