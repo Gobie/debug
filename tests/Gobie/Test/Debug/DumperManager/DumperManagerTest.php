@@ -31,7 +31,7 @@ class DumperManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testAddingDumperWithInvalidType()
     {
-        $dumperMock = $this->createIDumperWithGetType(1, null);
+        $dumperMock = $this->createIDumperWithGetTypeNull(1, null);
 
         $dumperManager = new DumperManager();
         $dumperManager->addDumper($dumperMock);
@@ -45,7 +45,7 @@ class DumperManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testAddingDumperWithUnknownType()
     {
-        $dumperMock = $this->createIDumperWithGetType(1, array('test'));
+        $dumperMock = $this->createIDumperWithGetTypeNull(1, array('test'));
 
         $dumperManager = new DumperManager();
         $dumperManager->addDumper($dumperMock);
@@ -56,7 +56,7 @@ class DumperManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testAddingSameDumperMultipleTimes()
     {
-        $dumperMock = $this->createIDumperWithGetType(3, array(IDumperManager::T_NULL));
+        $dumperMock = $this->createIDumperWithGetTypeNull(3, array(IDumperManager::T_NULL));
 
         $dumperManager = new DumperManager();
         $dumperManager->addDumper($dumperMock)
@@ -71,8 +71,8 @@ class DumperManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testAddingMultipleDumpers()
     {
-        $dumperMock1 = $this->createIDumperWithGetType();
-        $dumperMock2 = $this->createIDumperWithGetType();
+        $dumperMock1 = $this->createIDumperWithGetTypeNull();
+        $dumperMock2 = $this->createIDumperWithGetTypeNull();
 
         $dumperManager = new DumperManager(array($dumperMock1));
         $dumperManager->addDumper($dumperMock2);
@@ -84,11 +84,11 @@ class DumperManagerTest extends \PHPUnit_Framework_TestCase
      * Dumper must verify against given data or else is skipped.
      *
      * @expectedException \RuntimeException
-     * @expectedExceptionMessage There is no registered dumper for type 'NULL'.
+     * @expectedExceptionMessage No dumper capable of dumping variable '' of type 'NULL' found.
      */
     public function testUnverifiableDumpers()
     {
-        $dumperMock = $this->createIDumperWithGetType();
+        $dumperMock = $this->createIDumperWithGetTypeNull();
         $dumperMock->expects($this->exactly(1))
                    ->method('verify')
                    ->will($this->returnValue(false));
@@ -103,7 +103,7 @@ class DumperManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testDumping()
     {
-        $dumperMock = $this->createIDumperWithGetType();
+        $dumperMock = $this->createIDumperWithGetTypeNull();
         $dumperMock->expects($this->exactly(1))
                    ->method('verify')
                    ->will($this->returnValue(true));
@@ -128,7 +128,7 @@ class DumperManagerTest extends \PHPUnit_Framework_TestCase
      * @param array $returnValue Return value of getType
      * @return \PHPUnit_Framework_MockObject_MockObject
      */
-    private function createIDumperWithGetType($called = 1, $returnValue = array(IDumperManager::T_NULL))
+    private function createIDumperWithGetTypeNull($called = 1, $returnValue = array(IDumperManager::T_NULL))
     {
         $dumperMock = self::getMock('\Gobie\Debug\Dumpers\IDumper');
         $dumperMock->expects($this->exactly($called))

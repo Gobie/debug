@@ -137,9 +137,13 @@ class DumperManager implements IDumperManager
      */
     public function dump($var, $level = 1, $depth = 4)
     {
-        $out             = array();
         $type = gettype($var);
-        $dumpers = isset($this->dumpers[$type]) ? $this->dumpers[$type] : array();
+        if (!isset($this->dumpers[$type])) {
+            throw new \RuntimeException("There is no registered dumper for type '{$type}'.");
+        }
+
+        $dumpers = $this->dumpers[$type];
+        $out     = array();
         $replacedClasses = array();
 
         /** @var $dumper IDumper */
@@ -153,7 +157,7 @@ class DumperManager implements IDumperManager
         }
 
         if (count($out) === 0) {
-            throw new \RuntimeException("There is no registered dumper for type '{$type}'.");
+            throw new \RuntimeException("No dumper capable of dumping variable '{$var}' of type '{$type}' found.");
         }
 
         if ($this->isHtml) {
