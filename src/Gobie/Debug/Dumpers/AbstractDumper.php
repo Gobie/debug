@@ -68,15 +68,14 @@ abstract class AbstractDumper implements IDumper
     }
 
     /**
-     * @param mixed  $var
-     * @param string $type
-     * @param array  $replacedClasses
+     * @param mixed $var
+     * @param array $replacedClasses
+     * @internal param string $type
      * @return bool
      */
-    public function verify($var, $type, array $replacedClasses = array())
+    public function verify($var, array $replacedClasses = array())
     {
-        return isset($this->type[$type])
-               && !isset($replacedClasses['\\' . get_class($this)])
+        return !isset($replacedClasses['\\' . get_class($this)])
                && $this->verifyCustomCondition($var);
     }
 

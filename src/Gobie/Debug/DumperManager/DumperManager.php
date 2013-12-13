@@ -144,7 +144,7 @@ class DumperManager implements IDumperManager
 
         /** @var $dumper IDumper */
         foreach ($dumpers as $dumper) {
-            if (!$dumper->verify($var, $type, $replacedClasses)) {
+            if (!$dumper->verify($var, $replacedClasses)) {
                 continue;
             }
 
