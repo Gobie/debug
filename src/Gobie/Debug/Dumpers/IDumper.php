@@ -54,11 +54,11 @@ interface IDumper
      * Ověří, zda proměnná má být tímto objektem zpracována.
      *
      * @param mixed  $var             Proměnná
-     * @param string $varType         Datový typ proměnné
+     * @param string $type            Datový typ proměnné
      * @param array  $replacedClasses Použité dumpery
      * @return boolean
      */
-    public function verify($var, $varType, array $replacedClasses = array());
+    public function verify($var, $type, array $replacedClasses = array());
 
 
     /**

@@ -16,7 +16,7 @@ abstract class AbstractDumper implements IDumper
      * @var string
      * @see IDumperManager
      */
-    private $varType = IDumperManager::T_UNKNOWN;
+    private $type = IDumperManager::T_UNKNOWN;
 
     /**
      * DumperManager used for dumping subvalues.
@@ -45,6 +45,14 @@ abstract class AbstractDumper implements IDumper
     }
 
     /**
+     * @return array
+     */
+    public function getType()
+    {
+        return array_flip($this->type);
+    }
+
+    /**
      * @param string $types
      * @return $this
      */
@@ -54,41 +62,23 @@ abstract class AbstractDumper implements IDumper
             $types = func_get_args();
         }
 
-        $this->varType = array_flip($types);
+        $this->type = array_flip($types);
 
         return $this;
     }
 
     /**
-     * @return array
-     */
-    public function getType()
-    {
-        return array_flip($this->varType);
-    }
-
-    /**
      * @param mixed  $var
-     * @param string $varType
+     * @param string $type
      * @param array  $replacedClasses
      * @return bool
      */
-    public function verify($var, $varType, array $replacedClasses = array())
+    public function verify($var, $type, array $replacedClasses = array())
     {
-        return isset($this->varType[$varType])
+        return isset($this->type[$type])
                && !isset($replacedClasses['\\' . get_class($this)])
                && $this->verifyCustomCondition($var);
     }
-
-    /**
-     * Metoda k podědění, kde se nastaví dodatečná podmínka pro zpracování tímto objektem.
-     *
-     * Pokud vrátí true, tento objekt proměnnou zpracuje, jinak ne.
-     *
-     * @param mixed $var Variable
-     * @return boolean
-     */
-    abstract protected function verifyCustomCondition($var);
 
     /**
      * Odstraní manažeru kvůli cyklickému propojení.
@@ -105,4 +95,14 @@ abstract class AbstractDumper implements IDumper
     {
         return array();
     }
+
+    /**
+     * Metoda k podědění, kde se nastaví dodatečná podmínka pro zpracování tímto objektem.
+     *
+     * Pokud vrátí true, tento objekt proměnnou zpracuje, jinak ne.
+     *
+     * @param mixed $var Variable
+     * @return boolean
+     */
+    abstract protected function verifyCustomCondition($var);
 }

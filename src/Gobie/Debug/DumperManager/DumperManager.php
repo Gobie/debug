@@ -39,11 +39,11 @@ class DumperManager implements IDumperManager
     /**
      * Known data types.
      *
-     * Array of DumperManager::T_* constants.
+     * Array of IDumperManager::T_* constants.
      *
      * @var array
      */
-    protected $knownTypes = array(
+    protected static $knownTypes = array(
         self::T_BOOLEAN  => true,
         self::T_INTEGER  => true,
         self::T_DOUBLE   => true,
@@ -91,27 +91,27 @@ class DumperManager implements IDumperManager
      */
     public function addDumper(IDumper $dumper)
     {
-        $varTypeArr = $dumper->getType();
+        $types = $dumper->getType();
 
-        if (!is_array($varTypeArr)) {
+        if (!is_array($types)) {
             throw new \InvalidArgumentException("IDumper::getType must return array of types it can dump.");
         }
 
-        foreach ($varTypeArr as $varType) {
-            if (!isset($this->knownTypes[$varType])) {
-                throw new \InvalidArgumentException("Type '{$varType}' is unknown.");
+        foreach ($types as $type) {
+            if (!isset(self::$knownTypes[$type])) {
+                throw new \InvalidArgumentException("Type '{$type}' is unknown.");
             }
-
-            $dumper->setManager($this);
-
-            if (!isset($this->dumpers[$varType])) {
-                $this->dumpers[$varType] = array();
+            if (!isset($this->dumpers[$type])) {
+                $this->dumpers[$type] = array();
             }
-            if (in_array($dumper, $this->dumpers[$varType], true)) {
+            if (in_array($dumper, $this->dumpers[$type], true)) {
                 break;
             }
-            $this->dumpers[$varType][] = $dumper;
+
+            $this->dumpers[$type][] = $dumper;
         }
+
+        $dumper->setManager($this);
 
         return $this;
     }
@@ -121,15 +121,15 @@ class DumperManager implements IDumperManager
      */
     public function getDumpers()
     {
-        $out = array();
+        $dumpers = array();
         array_walk_recursive(
             $this->dumpers,
-            function ($value) use (&$out) {
-                $out[] = $value;
+            function ($value) use (&$dumpers) {
+                $dumpers[] = $value;
             }
         );
 
-        return $out;
+        return $dumpers;
     }
 
     /**
@@ -138,13 +138,13 @@ class DumperManager implements IDumperManager
     public function dump($var, $level = 1, $depth = 4)
     {
         $out             = array();
-        $varType         = gettype($var);
-        $dumpers         = isset($this->dumpers[$varType]) ? $this->dumpers[$varType] : array();
+        $type = gettype($var);
+        $dumpers = isset($this->dumpers[$type]) ? $this->dumpers[$type] : array();
         $replacedClasses = array();
 
         /** @var $dumper IDumper */
         foreach ($dumpers as $dumper) {
-            if (!$dumper->verify($var, $varType, $replacedClasses)) {
+            if (!$dumper->verify($var, $type, $replacedClasses)) {
                 continue;
             }
 
@@ -153,7 +153,7 @@ class DumperManager implements IDumperManager
         }
 
         if (count($out) === 0) {
-            throw new \RuntimeException("There is no registered dumper for type '{$varType}'.");
+            throw new \RuntimeException("There is no registered dumper for type '{$type}'.");
         }
 
         if ($this->isHtml) {
