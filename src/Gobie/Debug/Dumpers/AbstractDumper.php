@@ -5,13 +5,13 @@ namespace Gobie\Debug\Dumpers;
 use Gobie\Debug\DumperManager\IDumperManager;
 
 /**
- * Abstraktní třída pro všechny dumpery.
+ * Abstract class for dumpers.
  */
 abstract class AbstractDumper implements IDumper
 {
 
     /**
-     * Typ proměnné, pro kterou je tento objekt registrován.
+     * Variable type which this dumper can dump.
      *
      * @var string
      * @see IDumperManager
@@ -19,17 +19,24 @@ abstract class AbstractDumper implements IDumper
     private $varType = IDumperManager::T_UNKNOWN;
 
     /**
-     * Manažer zpracování pro dumpování.
+     * DumperManager used for dumping subvalues.
      *
      * @var IDumperManager
      */
     private $manager;
 
+    /**
+     * @return IDumperManager
+     */
     public function getManager()
     {
         return $this->manager;
     }
 
+    /**
+     * @param IDumperManager $manager
+     * @return $this
+     */
     public function setManager(IDumperManager $manager)
     {
         $this->manager = $manager;
@@ -37,10 +44,14 @@ abstract class AbstractDumper implements IDumper
         return $this;
     }
 
+    /**
+     * @param string $types
+     * @return $this
+     */
     public function setType($types)
     {
         if (!is_array($types)) {
-            $types = array($types);
+            $types = func_get_args();
         }
 
         $this->varType = array_flip($types);
@@ -48,11 +59,20 @@ abstract class AbstractDumper implements IDumper
         return $this;
     }
 
+    /**
+     * @return array
+     */
     public function getType()
     {
         return array_flip($this->varType);
     }
 
+    /**
+     * @param mixed  $var
+     * @param string $varType
+     * @param array  $replacedClasses
+     * @return bool
+     */
     public function verify($var, $varType, array $replacedClasses = array())
     {
         return isset($this->varType[$varType])
@@ -85,5 +105,4 @@ abstract class AbstractDumper implements IDumper
     {
         return array();
     }
-
 }
