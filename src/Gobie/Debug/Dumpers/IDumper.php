@@ -58,7 +58,7 @@ interface IDumper
      * @internal param string $type Datový typ proměnné
      * @return boolean
      */
-    public function verify($var, array $replacedClasses = array());
+    public function canDump($var, array $replacedClasses = array());
 
     /**
      * @return array

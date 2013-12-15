@@ -73,7 +73,7 @@ abstract class AbstractDumper implements IDumper
      * @internal param string $type
      * @return bool
      */
-    public function verify($var, array $replacedClasses = array())
+    public function canDump($var, array $replacedClasses = array())
     {
         return !isset($replacedClasses['\\' . get_class($this)])
                && $this->verifyCustomCondition($var);

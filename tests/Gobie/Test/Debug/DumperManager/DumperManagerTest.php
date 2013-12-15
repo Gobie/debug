@@ -90,8 +90,8 @@ class DumperManagerTest extends \PHPUnit_Framework_TestCase
     {
         $dumperMock = $this->createIDumperWithGetTypeNull();
         $dumperMock->expects($this->exactly(1))
-                   ->method('verify')
-                   ->will($this->returnValue(false));
+            ->method('canDump')
+            ->will($this->returnValue(false));
 
         $dumperManager = new DumperManager();
         $dumperManager->addDumper($dumperMock);
@@ -105,8 +105,8 @@ class DumperManagerTest extends \PHPUnit_Framework_TestCase
     {
         $dumperMock = $this->createIDumperWithGetTypeNull();
         $dumperMock->expects($this->exactly(1))
-                   ->method('verify')
-                   ->will($this->returnValue(true));
+            ->method('canDump')
+            ->will($this->returnValue(true));
         $dumperMock->expects($this->exactly(1))
                    ->method('dump')
                    ->will($this->returnValue('NULL'));
