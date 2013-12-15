@@ -10,13 +10,6 @@ use Gobie\Debug\Helpers;
 class Base64Dumper extends StringDumper
 {
 
-    public function getReplacedClasses()
-    {
-        return array(
-            '\Gobie\Debug\Dumpers\StringDumper' => true
-        );
-    }
-
     public function dump(&$var, $level, $depth)
     {
         $indentation = Helpers::indent($level);

@@ -82,7 +82,6 @@ class DumperManager implements IDumperManager
         foreach ($dumpers as $dumper) {
             $this->addDumper($dumper);
         }
-
     }
 
     /**
@@ -142,17 +141,14 @@ class DumperManager implements IDumperManager
             throw new \RuntimeException("There is no registered dumper for type '{$type}'.");
         }
 
-        $out     = array();
-        $replacedClasses = array();
-
+        $out = array();
         /** @var $dumper IDumper */
         foreach ($this->dumpers[$type] as $dumper) {
-            if (!$dumper->canDump($var, $replacedClasses)) {
+            if (!$dumper->canDump($var)) {
                 continue;
             }
 
             $out[] = $dumper->dump($var, $level, $depth);
-            $replacedClasses += $dumper->getReplacedClasses();
         }
 
         if (count($out) === 0) {

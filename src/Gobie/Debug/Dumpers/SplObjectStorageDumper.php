@@ -9,12 +9,6 @@ use Gobie\Debug\Helpers;
  */
 class SplObjectStorageDumper extends ObjectDumper
 {
-    public function getReplacedClasses()
-    {
-        return array(
-            '\Gobie\Debug\Dumpers\ObjectDumper' => true
-        );
-    }
 
     protected function dumpBody(&$var, $level, $depth, &$out)
     {

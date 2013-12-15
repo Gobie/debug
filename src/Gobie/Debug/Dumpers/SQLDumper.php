@@ -44,13 +44,6 @@ class SQLDumper extends StringDumper
         $this->regex = '@^\s*(' . implode('|', self::$topLevelKeywords) . ')\b.@iS';
     }
 
-    public function getReplacedClasses()
-    {
-        return array(
-            '\Gobie\Debug\Dumpers\StringDumper' => true
-        );
-    }
-
     public function dump(&$var, $level, $depth)
     {
         $sql = \SqlFormatter::format($var, false);

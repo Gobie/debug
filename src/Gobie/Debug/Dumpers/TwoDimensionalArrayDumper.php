@@ -9,12 +9,6 @@ use Gobie\Debug\Helpers;
  */
 class TwoDimensionalArrayDumper extends ArrayDumper
 {
-    public function getReplacedClasses()
-    {
-        return array(
-            '\Gobie\Debug\Dumpers\ArrayDumper' => true
-        );
-    }
 
     public function dump(&$var, $level, $depth)
     {

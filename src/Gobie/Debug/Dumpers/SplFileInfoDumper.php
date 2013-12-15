@@ -10,13 +10,6 @@ use Gobie\Debug\Helpers;
 class SplFileInfoDumper extends ObjectDumper
 {
 
-    public function getReplacedClasses()
-    {
-        return array(
-            '\Gobie\Debug\Dumpers\ObjectDumper' => true
-        );
-    }
-
     /**
      * Dumps file statistics.
      *

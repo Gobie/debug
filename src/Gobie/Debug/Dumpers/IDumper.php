@@ -53,15 +53,8 @@ interface IDumper
     /**
      * Ověří, zda proměnná má být tímto objektem zpracována.
      *
-     * @param mixed $var             Proměnná
-     * @param array $replacedClasses Použité dumpery
-     * @internal param string $type Datový typ proměnné
+     * @param mixed $var Proměnná
      * @return boolean
      */
-    public function canDump($var, array $replacedClasses = array());
-
-    /**
-     * @return array
-     */
-    public function getReplacedClasses();
+    public function canDump($var);
 }

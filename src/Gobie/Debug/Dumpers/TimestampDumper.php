@@ -19,14 +19,6 @@ class TimestampDumper extends AbstractDumper
         $this->setType(array(IDumperManager::T_INTEGER, IDumperManager::T_STRING));
     }
 
-    public function getReplacedClasses()
-    {
-        return array(
-            '\Gobie\Debug\Dumpers\StringDumper'  => true,
-            '\Gobie\Debug\Dumpers\IntegerDumper' => true
-        );
-    }
-
     public function dump(&$var, $level, $depth)
     {
         $indentation = Helpers::indent($level);

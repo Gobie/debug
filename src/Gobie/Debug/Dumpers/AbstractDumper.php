@@ -69,14 +69,11 @@ abstract class AbstractDumper implements IDumper
 
     /**
      * @param mixed $var
-     * @param array $replacedClasses
-     * @internal param string $type
      * @return bool
      */
-    public function canDump($var, array $replacedClasses = array())
+    public function canDump($var)
     {
-        return !isset($replacedClasses['\\' . get_class($this)])
-               && $this->verifyCustomCondition($var);
+        return $this->verifyCustomCondition($var);
     }
 
     /**
@@ -85,14 +82,6 @@ abstract class AbstractDumper implements IDumper
     public function __destruct()
     {
         unset($this->manager);
-    }
-
-    /**
-     * @return array
-     */
-    public function getReplacedClasses()
-    {
-        return array();
     }
 
     /**
