@@ -20,6 +20,7 @@ class AbstractDumperTest extends \PHPUnit_Framework_TestCase
         /** @var $dumper AbstractDumper */
         $dumper      = self::getMockForAbstractClass('\Gobie\Debug\Dumpers\AbstractDumper');
         $actualTypes = call_user_func_array(array($dumper, 'setType'), $setTypeArguments)->getType();
+
         self::assertEquals($expectedTypes, $actualTypes);
     }
 
@@ -58,4 +59,42 @@ class AbstractDumperTest extends \PHPUnit_Framework_TestCase
             ),
         );
     }
+
+    /**
+     * @expectedException \LogicException
+     * @expectedExceptionMessage Dumper has already different DumperManager set.
+     */
+    public function testSettingDifferentManagers()
+    {
+        /** @var $dumper AbstractDumper */
+        $dumper         = self::getMockForAbstractClass('\Gobie\Debug\Dumpers\AbstractDumper');
+        $dumperManager1 = self::getMock('\Gobie\Debug\DumperManager\IDumperManager');
+        $dumperManager2 = self::getMock('\Gobie\Debug\DumperManager\IDumperManager');
+
+        $dumper->setManager($dumperManager1)
+               ->setManager($dumperManager2);
+    }
+
+    public function testSettingManager()
+    {
+        /** @var $dumper AbstractDumper */
+        $dumper        = self::getMockForAbstractClass('\Gobie\Debug\Dumpers\AbstractDumper');
+        $dumperManager = self::getMock('\Gobie\Debug\DumperManager\IDumperManager');
+        $dumper->setManager($dumperManager);
+
+        self::assertSame($dumperManager, $dumper->getManager());
+    }
+
+    public function testSettingSameManagerMultipleTimes()
+    {
+        /** @var $dumper AbstractDumper */
+        $dumper        = self::getMockForAbstractClass('\Gobie\Debug\Dumpers\AbstractDumper');
+        $dumperManager = self::getMock('\Gobie\Debug\DumperManager\IDumperManager');
+        $dumper->setManager($dumperManager)
+               ->setManager($dumperManager);
+
+        self::assertSame($dumperManager, $dumper->getManager());
+    }
+
+
 }

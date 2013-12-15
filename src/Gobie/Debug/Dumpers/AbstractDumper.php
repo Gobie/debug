@@ -39,6 +39,9 @@ abstract class AbstractDumper implements IDumper
      */
     public function setManager(IDumperManager $manager)
     {
+        if ($this->manager && $this->manager !== $manager) {
+            throw new \LogicException('Dumper has already different DumperManager set.');
+        }
         $this->manager = $manager;
 
         return $this;
