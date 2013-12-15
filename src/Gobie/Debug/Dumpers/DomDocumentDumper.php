@@ -24,7 +24,7 @@ class DomDocumentDumper extends ObjectDumper
         return true;
     }
 
-    protected function verifyCustomCondition($var)
+    public function canDump($var)
     {
         return $var instanceof \DOMDocument;
     }

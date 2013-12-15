@@ -19,7 +19,7 @@ class FormattedTextDumper extends StringDumper
                . Helpers::wrapLines($var, $indentation . '<span class="dump_arg_expanded">', '</span>');
     }
 
-    protected function verifyCustomCondition($var)
+    public function canDump($var)
     {
         return $var && preg_match('@(\\n|\\t)@S', $var);
     }

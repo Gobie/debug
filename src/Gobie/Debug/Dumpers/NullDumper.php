@@ -22,9 +22,4 @@ class NullDumper extends AbstractDumper
     {
         return "<span class='dump_arg_null'>NULL</span>";
     }
-
-    protected function verifyCustomCondition($var)
-    {
-        return true;
-    }
 }

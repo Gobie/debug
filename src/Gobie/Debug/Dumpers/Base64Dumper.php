@@ -20,7 +20,7 @@ class Base64Dumper extends StringDumper
                . $indentation . '<span class="dump_arg_expanded">' . $value . '</span>';
     }
 
-    protected function verifyCustomCondition($var)
+    public function canDump($var)
     {
         return $var
                && strlen($var) % 4 === 0

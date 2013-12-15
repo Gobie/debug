@@ -29,9 +29,4 @@ class StringDumper extends AbstractDumper
         return "<span class='dump_arg_string'>" . $varEnc . "</span>"
                . ($varLen ? " <span class='dump_arg_desc'>(" . $varLen . ')</span>' : '');
     }
-
-    protected function verifyCustomCondition($var)
-    {
-        return true;
-    }
 }

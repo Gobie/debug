@@ -24,13 +24,12 @@ class XmlDumper extends StringDumper
                . Helpers::wrapLines($xml, $indentation . '<span class="dump_arg_expanded">', '</span>');
     }
 
-    protected function verifyCustomCondition($var)
+    public function canDump($var)
     {
-        return
-            $var
-            && $var{0} === '<'
-            && $var{strlen($var) - 1} === '>'
-            && ($dom = new \DOMDocument())
-            && $dom->loadXML($var);
+        return $var
+               && $var{0} === '<'
+               && $var{strlen($var) - 1} === '>'
+               && ($dom = new \DOMDocument())
+               && $dom->loadXML($var);
     }
 }

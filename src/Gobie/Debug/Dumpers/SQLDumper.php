@@ -55,7 +55,7 @@ class SQLDumper extends StringDumper
                . Helpers::wrapLines($sql, $indentation . '<span class="dump_arg_expanded">', '</span>');
     }
 
-    protected function verifyCustomCondition($var)
+    public function canDump($var)
     {
         return preg_match($this->regex, $var);
     }

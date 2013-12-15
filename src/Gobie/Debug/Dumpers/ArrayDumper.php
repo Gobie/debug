@@ -80,9 +80,4 @@ class ArrayDumper extends AbstractDumper
 
         return implode('', $out);
     }
-
-    protected function verifyCustomCondition($var)
-    {
-        return true;
-    }
 }

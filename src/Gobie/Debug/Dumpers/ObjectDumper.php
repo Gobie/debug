@@ -124,9 +124,4 @@ class ObjectDumper extends AbstractDumper
 
         return true;
     }
-
-    protected function verifyCustomCondition($var)
-    {
-        return true;
-    }
 }

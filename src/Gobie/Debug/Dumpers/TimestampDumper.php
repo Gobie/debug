@@ -29,7 +29,7 @@ class TimestampDumper extends AbstractDumper
                . $indentation . '<span class="dump_arg_expanded">' . date('Y-m-d H:i:s', $var) . '</span>';
     }
 
-    protected function verifyCustomCondition($var)
+    public function canDump($var)
     {
         $range = ((int) $var) / 1e9;
 

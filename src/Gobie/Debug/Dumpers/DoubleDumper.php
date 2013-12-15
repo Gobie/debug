@@ -24,9 +24,4 @@ class DoubleDumper extends AbstractDumper
 
         return "<span class='dump_arg_number'>" . $out . (strpos($out, '.') !== false ? '' : '.0') . '</span>';
     }
-
-    protected function verifyCustomCondition($var)
-    {
-        return true;
-    }
 }

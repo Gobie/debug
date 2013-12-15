@@ -24,12 +24,11 @@ class JsonDumper extends StringDumper
                . Helpers::wrapLines($json, $indentation . '<span class="dump_arg_expanded">', '</span>');
     }
 
-    protected function verifyCustomCondition($var)
+    public function canDump($var)
     {
         return $var
                && (($var{0} === '{' && $var{strlen($var) - 1} === '}')
-                   || ($var{0} === '['
-                       && $var{strlen($var) - 1} === ']'))
+                   || ($var{0} === '[' && $var{strlen($var) - 1} === ']'))
                && json_decode($var) !== null;
     }
 

@@ -36,7 +36,7 @@ interface IDumper
     public function getManager();
 
     /**
-     * Nastaví typ proměnné, pro kterou je objekt registrován.
+     * Sets types of variables dumper can dump.
      *
      * @param string $type Typ proměnné
      * @return self
@@ -44,14 +44,19 @@ interface IDumper
     public function setType($type);
 
     /**
-     * Vrátí typ proměnné, pro kterou je objekt registrován.
+     * Returns types of variables dumper can dump.
      *
      * @return array
      */
     public function getType();
 
     /**
-     * Ověří, zda proměnná má být tímto objektem zpracována.
+     * Checks if variable can be dumped by this dumper.
+     *
+     * It should be called before IDumper::dump().
+     *
+     * It should not explicitly check for variable type but for the requirements specific for the dumper.
+     * Variable types it can dump are set through IDumper::setTypes();
      *
      * @param mixed $var Proměnná
      * @return boolean

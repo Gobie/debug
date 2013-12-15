@@ -71,12 +71,11 @@ abstract class AbstractDumper implements IDumper
     }
 
     /**
-     * @param mixed $var
-     * @return bool
+     * {@inheritdoc}
      */
     public function canDump($var)
     {
-        return $this->verifyCustomCondition($var);
+        return true;
     }
 
     /**
@@ -86,14 +85,4 @@ abstract class AbstractDumper implements IDumper
     {
         unset($this->manager);
     }
-
-    /**
-     * Metoda k podědění, kde se nastaví dodatečná podmínka pro zpracování tímto objektem.
-     *
-     * Pokud vrátí true, tento objekt proměnnou zpracuje, jinak ne.
-     *
-     * @param mixed $var Variable
-     * @return boolean
-     */
-    abstract protected function verifyCustomCondition($var);
 }

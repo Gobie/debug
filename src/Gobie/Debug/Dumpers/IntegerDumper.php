@@ -22,9 +22,4 @@ class IntegerDumper extends AbstractDumper
     {
         return "<span class='dump_arg_number'>" . $var . '</span>';
     }
-
-    protected function verifyCustomCondition($var)
-    {
-        return true;
-    }
 }

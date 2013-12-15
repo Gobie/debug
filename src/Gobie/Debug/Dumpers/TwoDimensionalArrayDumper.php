@@ -34,7 +34,7 @@ class TwoDimensionalArrayDumper extends ArrayDumper
         return implode('', $out);
     }
 
-    protected function verifyCustomCondition($var)
+    public function canDump($var)
     {
         $keys = null;
         foreach ($var as $row) {

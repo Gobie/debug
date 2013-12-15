@@ -22,9 +22,4 @@ class BooleanDumper extends AbstractDumper
     {
         return '<span class="dump_arg_bool">' . ($var ? 'TRUE' : 'FALSE') . '</span>';
     }
-
-    protected function verifyCustomCondition($var)
-    {
-        return true;
-    }
 }

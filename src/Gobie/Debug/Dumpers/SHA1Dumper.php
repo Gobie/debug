@@ -18,7 +18,7 @@ class SHA1Dumper extends StringDumper
                . $indentation . '<span class="dump_arg_desc">guessing SHA1 hash</span>';
     }
 
-    protected function verifyCustomCondition($var)
+    public function canDump($var)
     {
         return $var && strlen($var) === 40 && !preg_match('@[^0-9a-f]@Si', $var);
     }
