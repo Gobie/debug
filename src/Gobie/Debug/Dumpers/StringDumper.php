@@ -18,7 +18,7 @@ class StringDumper extends AbstractDumper
      */
     public function __construct()
     {
-        $this->setType(IDumperManager::T_STRING);
+        $this->setTypes(IDumperManager::T_STRING);
     }
 
     public function dump(&$var, $level, $depth)

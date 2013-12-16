@@ -15,7 +15,7 @@ class NullDumper extends AbstractDumper
      */
     public function __construct()
     {
-        $this->setType(IDumperManager::T_NULL);
+        $this->setTypes(IDumperManager::T_NULL);
     }
 
     public function dump(&$var, $level, $depth)

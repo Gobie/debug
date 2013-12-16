@@ -33,7 +33,7 @@ class ArrayDumper extends AbstractDumper
      */
     public function __construct()
     {
-        $this->setType(IDumperManager::T_ARRAY);
+        $this->setTypes(IDumperManager::T_ARRAY);
         $this->recursionMarker = uniqid("\x00", true);
     }
 

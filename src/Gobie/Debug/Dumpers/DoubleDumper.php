@@ -15,7 +15,7 @@ class DoubleDumper extends AbstractDumper
      */
     public function __construct()
     {
-        $this->setType(IDumperManager::T_DOUBLE);
+        $this->setTypes(IDumperManager::T_DOUBLE);
     }
 
     public function dump(&$var, $level, $depth)

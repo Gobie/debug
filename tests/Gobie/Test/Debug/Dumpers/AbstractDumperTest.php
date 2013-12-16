@@ -19,7 +19,7 @@ class AbstractDumperTest extends \PHPUnit_Framework_TestCase
     {
         /** @var $dumper AbstractDumper */
         $dumper      = self::getMockForAbstractClass('\Gobie\Debug\Dumpers\AbstractDumper');
-        $actualTypes = call_user_func_array(array($dumper, 'setType'), $setTypeArguments)->getType();
+        $actualTypes = call_user_func_array(array($dumper, 'setTypes'), $setTypeArguments)->getTypes();
 
         self::assertEquals($expectedTypes, $actualTypes);
     }

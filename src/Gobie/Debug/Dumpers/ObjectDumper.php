@@ -27,7 +27,7 @@ class ObjectDumper extends AbstractDumper
      */
     public function __construct($skipModifiers = 0)
     {
-        $this->setType(IDumperManager::T_OBJECT);
+        $this->setTypes(IDumperManager::T_OBJECT);
         $this->skipModifiers = (int) $skipModifiers;
     }
 

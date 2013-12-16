@@ -90,7 +90,7 @@ class DumperManager implements IDumperManager
      */
     public function addDumper(IDumper $dumper)
     {
-        $types = $dumper->getType();
+        $types = $dumper->getTypes();
 
         if (!is_array($types)) {
             throw new \InvalidArgumentException("IDumper::getType must return array of types it can dump.");

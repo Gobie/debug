@@ -15,7 +15,7 @@ class IntegerDumper extends AbstractDumper
      */
     public function __construct()
     {
-        $this->setType(IDumperManager::T_INTEGER);
+        $this->setTypes(IDumperManager::T_INTEGER);
     }
 
     public function dump(&$var, $level, $depth)

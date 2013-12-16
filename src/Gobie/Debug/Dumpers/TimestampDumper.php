@@ -16,7 +16,7 @@ class TimestampDumper extends AbstractDumper
      */
     public function __construct()
     {
-        $this->setType(array(IDumperManager::T_INTEGER, IDumperManager::T_STRING));
+        $this->setTypes(array(IDumperManager::T_INTEGER, IDumperManager::T_STRING));
     }
 
     public function dump(&$var, $level, $depth)

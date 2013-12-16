@@ -129,7 +129,7 @@ class DumperManagerTest extends \PHPUnit_Framework_TestCase
     {
         $dumperMock = self::getMock('\Gobie\Debug\Dumpers\IDumper');
         $dumperMock->expects($this->exactly($called))
-                   ->method('getType')
+                   ->method('getTypes')
                    ->will($this->returnValue($returnValue));
 
         return $dumperMock;

@@ -22,7 +22,7 @@ class ResourceDumper extends AbstractDumper
      */
     public function __construct()
     {
-        $this->setType(IDumperManager::T_RESOURCE);
+        $this->setTypes(IDumperManager::T_RESOURCE);
     }
 
     public function dump(&$var, $level, $depth)

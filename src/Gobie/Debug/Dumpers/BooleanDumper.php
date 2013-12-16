@@ -15,7 +15,7 @@ class BooleanDumper extends AbstractDumper
      */
     public function __construct()
     {
-        $this->setType(IDumperManager::T_BOOLEAN);
+        $this->setTypes(IDumperManager::T_BOOLEAN);
     }
 
     public function dump(&$var, $level, $depth)

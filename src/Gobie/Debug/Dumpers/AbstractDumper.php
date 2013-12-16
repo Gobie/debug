@@ -26,7 +26,7 @@ abstract class AbstractDumper implements IDumper
     private $manager;
 
     /**
-     * @return IDumperManager
+     * {@inheritdoc}
      */
     public function getManager()
     {
@@ -34,8 +34,7 @@ abstract class AbstractDumper implements IDumper
     }
 
     /**
-     * @param IDumperManager $manager
-     * @return $this
+     * {@inheritdoc}
      */
     public function setManager(IDumperManager $manager)
     {
@@ -48,18 +47,17 @@ abstract class AbstractDumper implements IDumper
     }
 
     /**
-     * @return array
+     * {@inheritdoc}
      */
-    public function getType()
+    public function getTypes()
     {
         return array_flip($this->type);
     }
 
     /**
-     * @param string $types
-     * @return $this
+     * {@inheritdoc}
      */
-    public function setType($types)
+    public function setTypes($types)
     {
         if (!is_array($types)) {
             $types = func_get_args();
@@ -79,7 +77,7 @@ abstract class AbstractDumper implements IDumper
     }
 
     /**
-     * Odstraní manažeru kvůli cyklickému propojení.
+     * Removes DumperManager to break cyclic reference.
      */
     public function __destruct()
     {
