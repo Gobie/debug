@@ -9,11 +9,16 @@
          processIsolation="false"
          stopOnFailure="false"
          syntaxCheck="false"
-         bootstrap="./bootstrap.php"
-        >
+         bootstrap="./bootstrap.php">
+
     <testsuites>
-        <testsuite name="Full Debug Test Suite">
+        <testsuite name="Full">
             <directory suffix=".php">./Gobie</directory>
+        </testsuite>
+
+        <testsuite name="DumperManager">
+            <directory suffix=".php">./Gobie/Test/Debug/DumperManager</directory>
+            <directory suffix=".php">./Gobie/Test/Debug/Dumpers</directory>
         </testsuite>
     </testsuites>
 
