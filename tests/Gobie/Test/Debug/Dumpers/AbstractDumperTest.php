@@ -15,7 +15,7 @@ class AbstractDumperTest extends \PHPUnit_Framework_TestCase
      * @param $expectedTypes
      * @dataProvider provideTypes
      */
-    public function testSettingAndGettingTypes($setTypeArguments, $expectedTypes)
+    public function testSetAndGetTypes($setTypeArguments, $expectedTypes)
     {
         /** @var $dumper AbstractDumper */
         $dumper      = self::getMockForAbstractClass('\Gobie\Debug\Dumpers\AbstractDumper');
@@ -60,22 +60,7 @@ class AbstractDumperTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    /**
-     * @expectedException \LogicException
-     * @expectedExceptionMessage Dumper has already different DumperManager set.
-     */
-    public function testSettingDifferentManagers()
-    {
-        /** @var $dumper AbstractDumper */
-        $dumper         = self::getMockForAbstractClass('\Gobie\Debug\Dumpers\AbstractDumper');
-        $dumperManager1 = self::getMock('\Gobie\Debug\DumperManager\IDumperManager');
-        $dumperManager2 = self::getMock('\Gobie\Debug\DumperManager\IDumperManager');
-
-        $dumper->setManager($dumperManager1)
-               ->setManager($dumperManager2);
-    }
-
-    public function testSettingManager()
+    public function testSetManager()
     {
         /** @var $dumper AbstractDumper */
         $dumper        = self::getMockForAbstractClass('\Gobie\Debug\Dumpers\AbstractDumper');
@@ -85,7 +70,7 @@ class AbstractDumperTest extends \PHPUnit_Framework_TestCase
         self::assertSame($dumperManager, $dumper->getManager());
     }
 
-    public function testSettingSameManagerMultipleTimes()
+    public function testSetSameManagerMultipleTimes()
     {
         /** @var $dumper AbstractDumper */
         $dumper        = self::getMockForAbstractClass('\Gobie\Debug\Dumpers\AbstractDumper');
@@ -96,5 +81,19 @@ class AbstractDumperTest extends \PHPUnit_Framework_TestCase
         self::assertSame($dumperManager, $dumper->getManager());
     }
 
+    /**
+     * @expectedException \LogicException
+     * @expectedExceptionMessage Dumper has already different DumperManager set.
+     */
+    public function testSetDifferentManagers()
+    {
+        /** @var $dumper AbstractDumper */
+        $dumper         = self::getMockForAbstractClass('\Gobie\Debug\Dumpers\AbstractDumper');
+        $dumperManager1 = self::getMock('\Gobie\Debug\DumperManager\IDumperManager');
+        $dumperManager2 = self::getMock('\Gobie\Debug\DumperManager\IDumperManager');
+
+        $dumper->setManager($dumperManager1)
+               ->setManager($dumperManager2);
+    }
 
 }

@@ -13,7 +13,7 @@ class ArrayDumperTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider provideDump
      */
-    public function testDumpRecursion($input, $expectedOutput)
+    public function testDump($input, $expectedOutput)
     {
         $dumper        = new ArrayDumper();
         $dumperManager = self::getMock('\Gobie\Debug\DumperManager\DumperManager');
