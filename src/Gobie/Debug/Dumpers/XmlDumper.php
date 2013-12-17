@@ -10,7 +10,7 @@ use Gobie\Debug\Helpers;
 class XmlDumper extends StringDumper
 {
 
-    public function dump(&$var, $level, $depth)
+    public function dump(&$var, $level = 1, $depth = 4)
     {
         $dom               = new \DOMDocument();
         $dom->formatOutput = true;

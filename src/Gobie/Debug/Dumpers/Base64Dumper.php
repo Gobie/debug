@@ -10,7 +10,10 @@ use Gobie\Debug\Helpers;
 class Base64Dumper extends StringDumper
 {
 
-    public function dump(&$var, $level, $depth)
+    /**
+     * {@inheritdoc}
+     */
+    public function dump(&$var, $level = 1, $depth = 4)
     {
         $indentation = Helpers::indent($level);
         $value       = Helpers::encodeString(base64_decode($var));

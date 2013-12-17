@@ -10,7 +10,7 @@ use Gobie\Debug\Helpers;
 class TwoDimensionalArrayDumper extends ArrayDumper
 {
 
-    public function dump(&$var, $level, $depth)
+    public function dump(&$var, $level = 1, $depth = 4)
     {
         $out = array();
 

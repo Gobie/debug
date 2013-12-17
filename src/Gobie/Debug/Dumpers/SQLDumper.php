@@ -44,7 +44,7 @@ class SQLDumper extends StringDumper
         $this->regex = '@^\s*(' . implode('|', self::$topLevelKeywords) . ')\b.@iS';
     }
 
-    public function dump(&$var, $level, $depth)
+    public function dump(&$var, $level = 1, $depth = 4)
     {
         $sql = \SqlFormatter::format($var, false);
 

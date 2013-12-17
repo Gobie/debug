@@ -10,7 +10,7 @@ use Gobie\Debug\Helpers;
 class JsonDumper extends StringDumper
 {
 
-    public function dump(&$var, $level, $depth)
+    public function dump(&$var, $level = 1, $depth = 4)
     {
         if (defined('JSON_PRETTY_PRINT')) {
             $json = json_encode(json_decode($var), JSON_PRETTY_PRINT);

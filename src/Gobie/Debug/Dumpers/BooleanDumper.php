@@ -18,7 +18,7 @@ class BooleanDumper extends AbstractDumper
         $this->setTypes(IDumperManager::T_BOOLEAN);
     }
 
-    public function dump(&$var, $level, $depth)
+    public function dump(&$var, $level = 1, $depth = 4)
     {
         return '<span class="dump_arg_bool">' . ($var ? 'TRUE' : 'FALSE') . '</span>';
     }

@@ -18,7 +18,7 @@ class DoubleDumper extends AbstractDumper
         $this->setTypes(IDumperManager::T_DOUBLE);
     }
 
-    public function dump(&$var, $level, $depth)
+    public function dump(&$var, $level = 1, $depth = 4)
     {
         $out = var_export($var, true);
 

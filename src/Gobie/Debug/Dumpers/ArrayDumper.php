@@ -37,7 +37,10 @@ class ArrayDumper extends AbstractDumper
         $this->recursionMarker = uniqid("\x00", true);
     }
 
-    public function dump(&$var, $level, $depth)
+    /**
+     * {@inheritdoc}
+     */
+    public function dump(&$var, $level = 1, $depth = 4)
     {
         if (isset($var[$this->recursionMarker])) {
             return '**RECURSION**';

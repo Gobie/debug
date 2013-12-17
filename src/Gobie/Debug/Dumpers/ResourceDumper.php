@@ -25,7 +25,7 @@ class ResourceDumper extends AbstractDumper
         $this->setTypes(IDumperManager::T_RESOURCE);
     }
 
-    public function dump(&$var, $level, $depth)
+    public function dump(&$var, $level = 1, $depth = 4)
     {
         $indentation = Helpers::indent($level);
         $resType     = get_resource_type($var);

@@ -31,7 +31,7 @@ class ObjectDumper extends AbstractDumper
         $this->skipModifiers = (int) $skipModifiers;
     }
 
-    public function dump(&$var, $level, $depth)
+    public function dump(&$var, $level = 1, $depth = 4)
     {
         static $recursion = array();
 

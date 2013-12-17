@@ -19,7 +19,7 @@ class TimestampDumper extends AbstractDumper
         $this->setTypes(array(IDumperManager::T_INTEGER, IDumperManager::T_STRING));
     }
 
-    public function dump(&$var, $level, $depth)
+    public function dump(&$var, $level = 1, $depth = 4)
     {
         $indentation = Helpers::indent($level);
         $class       = is_string($var) ? 'dump_arg_string' : 'dump_arg_number';

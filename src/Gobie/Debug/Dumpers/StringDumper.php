@@ -21,7 +21,7 @@ class StringDumper extends AbstractDumper
         $this->setTypes(IDumperManager::T_STRING);
     }
 
-    public function dump(&$var, $level, $depth)
+    public function dump(&$var, $level = 1, $depth = 4)
     {
         $varEnc = Helpers::encodeString($var);
         $varLen = strlen($var);

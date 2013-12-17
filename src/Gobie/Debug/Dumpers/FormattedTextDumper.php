@@ -10,7 +10,7 @@ use Gobie\Debug\Helpers;
 class FormattedTextDumper extends StringDumper
 {
 
-    public function dump(&$var, $level, $depth)
+    public function dump(&$var, $level = 1, $depth = 4)
     {
         $indentation = Helpers::indent($level);
 
