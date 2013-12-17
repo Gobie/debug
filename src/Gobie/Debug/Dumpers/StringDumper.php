@@ -26,7 +26,7 @@ class StringDumper extends AbstractDumper
         $varEnc = Helpers::encodeString($var);
         $varLen = strlen($var);
 
-        return "<span class='dump_arg_string'>" . $varEnc . "</span>"
-               . ($varLen ? " <span class='dump_arg_desc'>(" . $varLen . ')</span>' : '');
+        return '<span class="dump_arg_string">' . $varEnc . '</span>'
+               . ($varLen ? ' <span class="dump_arg_desc">(' . $varLen . ')</span>' : '');
     }
 }
