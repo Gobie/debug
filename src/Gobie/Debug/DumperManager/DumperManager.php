@@ -134,7 +134,7 @@ class DumperManager implements IDumperManager
     /**
      * {@inheritdoc}
      */
-    public function dump($var, $level = 1, $depth = 4)
+    public function dump(&$var, $level = 1, $depth = 4)
     {
         $type = gettype($var);
         if (!isset($this->dumpers[$type])) {

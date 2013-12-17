@@ -45,5 +45,5 @@ interface IDumperManager
      * @param integer $depth Max depth of variable dump
      * @return string
      */
-    public function dump($var, $level, $depth);
+    public function dump(&$var, $level, $depth);
 }

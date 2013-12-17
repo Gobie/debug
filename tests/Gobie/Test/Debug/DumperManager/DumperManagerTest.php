@@ -20,7 +20,8 @@ class DumperManagerTest extends \PHPUnit_Framework_TestCase
     public function testNoDumpers()
     {
         $dumperManager = new DumperManager();
-        $dumperManager->dump('no dumper');
+        $var           = 'no dumper';
+        $dumperManager->dump($var);
     }
 
     /**
@@ -35,6 +36,23 @@ class DumperManagerTest extends \PHPUnit_Framework_TestCase
 
         $dumperManager = new DumperManager();
         $dumperManager->addDumper($dumperMock);
+    }
+
+    /**
+     * Create IDumper mock for later use.
+     *
+     * @param int   $called      Expected to be called
+     * @param array $returnValue Return value of getType
+     * @return \PHPUnit_Framework_MockObject_MockObject
+     */
+    private function createIDumperWithGetTypeNull($called = 1, $returnValue = array(IDumperManager::T_NULL))
+    {
+        $dumperMock = self::getMock('\Gobie\Debug\Dumpers\IDumper');
+        $dumperMock->expects($this->exactly($called))
+                   ->method('getTypes')
+                   ->will($this->returnValue($returnValue));
+
+        return $dumperMock;
     }
 
     /**
@@ -95,7 +113,8 @@ class DumperManagerTest extends \PHPUnit_Framework_TestCase
 
         $dumperManager = new DumperManager();
         $dumperManager->addDumper($dumperMock);
-        $dumperManager->dump(null);
+        $var = null;
+        $dumperManager->dump($var);
     }
 
     /**
@@ -113,25 +132,9 @@ class DumperManagerTest extends \PHPUnit_Framework_TestCase
 
         $dumperManager = new DumperManager();
         $dumperManager->addDumper($dumperMock);
-        $out = $dumperManager->dump(null);
+        $var = null;
+        $out = $dumperManager->dump($var);
 
         self::assertEquals('NULL', $out);
-    }
-
-    /**
-     * Create IDumper mock for later use.
-     *
-     * @param int   $called      Expected to be called
-     * @param array $returnValue Return value of getType
-     * @return \PHPUnit_Framework_MockObject_MockObject
-     */
-    private function createIDumperWithGetTypeNull($called = 1, $returnValue = array(IDumperManager::T_NULL))
-    {
-        $dumperMock = self::getMock('\Gobie\Debug\Dumpers\IDumper');
-        $dumperMock->expects($this->exactly($called))
-                   ->method('getTypes')
-                   ->will($this->returnValue($returnValue));
-
-        return $dumperMock;
     }
 }
