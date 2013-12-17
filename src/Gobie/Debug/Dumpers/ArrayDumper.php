@@ -6,30 +6,27 @@ use Gobie\Debug\DumperManager\IDumperManager;
 use Gobie\Debug\Helpers;
 
 /**
- * Dumper pole.
+ * Array dumper.
  */
 class ArrayDumper extends AbstractDumper
 {
 
     /**
-     * Značka pro zjištění referenční rekurze polí.
+     * Marker for recognizing array recursion.
      *
-     * Velice nespolehlivé.
+     * Inconsistent, compare results of following code with var_dump output:
      * <pre>
      * $a = array();
      * $a[] = &$a;
      * $a[0][] = $a;
      * </pre>
-     * Porovnejte výstupy z var_dump a z této funkce.
      *
      * @var string
      */
     private $recursionMarker;
 
     /**
-     * Nastaví typ proménné na 'array'.
-     *
-     * Definice značky pro zjištění referenční rekurze polí.
+     * Sets types it can dump and recursion marker.
      */
     public function __construct()
     {
@@ -73,7 +70,7 @@ class ArrayDumper extends AbstractDumper
             $dValue = $this->getManager()->dump($value, $level + 1, $depth - 1);
             $out[]  = $indentation . $dKey . '<span class="dump_arg_keyword"> =&gt; </span>' . $dValue;
 
-            // Ošetření posledního řádku
+            // Last line fix
             if ($pos !== $count || ($pos === $count && $depth === 0)) {
                 $out[] = PHP_EOL;
             }
