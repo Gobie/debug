@@ -47,8 +47,7 @@ class ArrayDumperTest extends \PHPUnit_Framework_TestCase
         $c[0][] = $c;
 
         return array(
-            // Simple recursion
-            array(
+            'simple recursion'        => array(
                 $a,
                 '<b>array</b> <span class="dump_arg_desc">(1)</span>' . PHP_EOL .
                 '<span class="dump_arg_indent">|  </span>0<span class="dump_arg_keyword"> =&gt; </span>' .
@@ -56,8 +55,7 @@ class ArrayDumperTest extends \PHPUnit_Framework_TestCase
                 '<span class="dump_arg_indent">|  |  </span>0<span class="dump_arg_keyword"> =&gt; </span>' .
                 '**RECURSION**'
             ),
-            // Complex recursion
-            array(
+            'complex recursion'       => array(
                 $b,
                 '<b>array</b> <span class="dump_arg_desc">(2)</span>' . PHP_EOL .
                 '<span class="dump_arg_indent">|  </span>0<span class="dump_arg_keyword"> =&gt; </span>' .
@@ -69,8 +67,7 @@ class ArrayDumperTest extends \PHPUnit_Framework_TestCase
                 '<span class="dump_arg_indent">|  |  </span>1<span class="dump_arg_keyword"> =&gt; </span>' .
                 '**RECURSION**'
             ),
-            // Different from var_dump
-            array(
+            'different from var_dump' => array(
                 $c,
                 '<b>array</b> <span class="dump_arg_desc">(2)</span>' . PHP_EOL .
                 '<span class="dump_arg_indent">|  </span>0<span class="dump_arg_keyword"> =&gt; </span>' .
@@ -114,8 +111,7 @@ class ArrayDumperTest extends \PHPUnit_Framework_TestCase
                 '<span class="dump_arg_indent">|  |  |  |  </span>1<span class="dump_arg_keyword"> =&gt; </span>' .
                 '<b>array</b> <span class="dump_arg_desc">(2)</span> ...'
             ),
-            // Deep structure
-            array(
+            'deep structure'          => array(
                 array(
                     array(
                         array(
@@ -140,8 +136,7 @@ class ArrayDumperTest extends \PHPUnit_Framework_TestCase
                 '<span class="dump_arg_indent">|  </span>1<span class="dump_arg_keyword"> =&gt; </span>' .
                 '<b>array</b> <span class="dump_arg_desc">(0)</span>'
             ),
-            // Empty array
-            array(
+            'empty array'             => array(
                 array(),
                 '<b>array</b> <span class="dump_arg_desc">(0)</span>'
             )

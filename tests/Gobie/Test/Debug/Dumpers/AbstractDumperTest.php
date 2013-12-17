@@ -30,30 +30,27 @@ class AbstractDumperTest extends \PHPUnit_Framework_TestCase
     public function provideTypes()
     {
         return array(
-            // multiple scalar arguments
-            array(
+            'scalar argument'    => array(
                 array('type1'),
                 array('type1')
             ),
-            array(
+            'scalar arguments'   => array(
                 array('type1', 'type2'),
                 array('type1', 'type2')
             ),
-            // array argument
-            array(
+            'array argument'     => array(
                 array(array('type1')),
                 array('type1')
             ),
-            array(
+            'array arguments'    => array(
                 array(array('type1', 'type2')),
                 array('type1', 'type2')
             ),
-            // mixed argument
-            array(
+            'mixed arguments #1' => array(
                 array(array('type1'), 'ignored'),
                 array('type1')
             ),
-            array(
+            'mixed arguments #2' => array(
                 array(array('type1', 'type2'), array('ignored')),
                 array('type1', 'type2')
             ),
