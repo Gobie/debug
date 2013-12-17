@@ -7,7 +7,7 @@ use Gobie\Debug\Dumpers\ArrayDumper;
 /**
  * Test for ArrayDumper.
  */
-class ArrayDumperTest extends \PHPUnit_Framework_TestCase
+class ArrayDumperTest extends BaseDumperTest
 {
 
     /**
@@ -15,19 +15,7 @@ class ArrayDumperTest extends \PHPUnit_Framework_TestCase
      */
     public function testDump($input, $expectedOutput)
     {
-        $dumper        = new ArrayDumper();
-        $dumperManager = self::getMock('\Gobie\Debug\DumperManager\DumperManager');
-        $dumperManager->expects($this->any())
-                      ->method('dump')
-                      ->will($this->returnCallback(
-                                  function (&$value, $level, $depth) use ($dumper) {
-                                      return $dumper->dump($value, $level, $depth);
-                                  }
-                      ));
-        $dumper->setManager($dumperManager);
-        $actualOutput = $dumper->dump($input);
-
-        self::assertSame($expectedOutput, $actualOutput);
+        $this->dump(new ArrayDumper(), $input, $expectedOutput);
     }
 
     /**
