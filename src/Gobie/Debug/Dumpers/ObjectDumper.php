@@ -10,13 +10,13 @@ use Gobie\Debug\Helpers;
  */
 class ObjectDumper extends AbstractDumper
 {
+
     /**
      * Bit mask of \ReflectionProperty constants.
      *
      * @var integer
      */
     protected $skipModifiers;
-
 
     /**
      * Sets type and property modifiers to skip.
@@ -31,25 +31,28 @@ class ObjectDumper extends AbstractDumper
         $this->skipModifiers = (int) $skipModifiers;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function dump(&$var, $level = 1, $depth = 4)
     {
         static $recursion = array();
 
         $objHash      = spl_object_hash($var);
         $shortObjHash = substr(md5($objHash), 0, 4);
-        if (isset($recursion[$objHash])) {
-            return
-                '**RECURSION** <span class="dump_arg_class">'
-                . get_class($var)
-                . '</span> <span class="dump_arg_desc">#'
-                . $shortObjHash
-                . '</span>';
-        }
-        $recursion[$objHash] = true;
 
         $out   = array();
-        $out[] = '<span class="dump_arg_class">' . get_class($var) . '</span>';
-        $out[] = ' <span class="dump_arg_desc">#' . $shortObjHash . '</span>';
+        $out[] =
+            '<span class="dump_arg_class">'
+            . get_class($var)
+            . '</span> <span class="dump_arg_desc">#'
+            . $shortObjHash
+            . '</span>';
+
+        if (isset($recursion[$objHash])) {
+            return '**RECURSION** ' . implode('', $out);
+        }
+        $recursion[$objHash] = true;
 
         $reflector       = new \ReflectionObject($var);
         $parentReflector = $reflector;
@@ -86,27 +89,38 @@ class ObjectDumper extends AbstractDumper
         return implode('', $out);
     }
 
+    /**
+     * Dumps body of the object.
+     *
+     * It is intended to be overridden in subclasses.
+     *
+     * @param mixed   $var   Variable
+     * @param integer $level Current level of indentation
+     * @param integer $depth Max depth of variable dump
+     * @param array   $out   Array of output
+     */
     protected function dumpBody(&$var, $level, $depth, &$out)
     {
-        $indentation = Helpers::indent($level);
-
         $reflector       = new \ReflectionObject($var);
         $properties      = $reflector->getProperties(~$this->skipModifiers);
         $propertiesCount = count($properties);
         $out[]           = ' <span class="dump_arg_desc">(' . $propertiesCount . ')</span>';
+
         if (!$propertiesCount) {
-            return true;
+            return;
         }
 
-        $pos   = 1;
-        $out[] = PHP_EOL;
+        $pos         = 1;
+        $out[]       = PHP_EOL;
+        $indentation = Helpers::indent($level);
+
+        /* @var $property \ReflectionProperty */
         foreach ($properties as $property) {
             $modifiers = $property->getModifiers();
             if ($modifiers & $this->skipModifiers) {
                 continue;
             }
 
-            /* @var $property \ReflectionProperty */
             $property->setAccessible(true);
             $value         = $this->getManager()->dump($property->getValue($var), $level + 1, $depth - 1);
             $propertyName  = Helpers::encodeKey($property->getName());
@@ -115,13 +129,11 @@ class ObjectDumper extends AbstractDumper
             $out[] = $indentation . $propertyName . ':<span class="dump_arg_access">' . $modifierNames . '</span>';
             $out[] = '<span class="dump_arg_keyword"> => </span>' . $value;
 
-            // Ošetření posledního řádku výpisu
+            // Last line fix
             if ($pos !== $propertiesCount || ($pos === $propertiesCount && $depth === 0)) {
                 $out[] = PHP_EOL;
             }
             ++$pos;
         }
-
-        return true;
     }
 }
