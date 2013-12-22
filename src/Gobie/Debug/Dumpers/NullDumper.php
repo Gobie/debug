@@ -5,21 +5,24 @@ namespace Gobie\Debug\Dumpers;
 use Gobie\Debug\DumperManager\IDumperManager;
 
 /**
- * Dumper nullu.
+ * Null dumper.
  */
 class NullDumper extends AbstractDumper
 {
 
     /**
-     * Nastaví typ proménné na 'NULL'.
+     * Sets types it can dump.
      */
     public function __construct()
     {
         $this->setTypes(IDumperManager::T_NULL);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function dump(&$var, $level = 1, $depth = 4)
     {
-        return "<span class='dump_arg_null'>NULL</span>";
+        return '<span class="dump_arg_null">NULL</span>';
     }
 }
