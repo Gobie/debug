@@ -3,15 +3,38 @@ module.exports = function (grunt) {
     // Project configuration.
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
-        php_files: ['src/**/*.php', 'tests/**/*.php'],
-        js_files: ['src/**/*.js', 'tests/**/*.js', '!**/*.min.js'],
+
+        files: {
+            server: {
+                php: ['src/**/*.php', 'tests/**/*.php'],
+                js_tests: ['tests/**/*.js'],
+                js_config: ['*.js']
+            },
+            client: {
+                js: ['src/**/*.js', '!**/*.min.js', '!**/debugger.js']
+            }
+        },
+
         phpunit: {
             options: {
                 bin: 'vendor/bin/phpunit',
                 configuration: 'tests/complete.phpunit.xml'
             },
-            project: {
+            unit: {
                 dir: 'tests/'
+            }
+        },
+        karma: {
+            options: {
+                configFile: 'karma.conf.js',
+                reporters: ['dots']
+            },
+            unit: {
+                background: true
+            },
+            continuous: {
+                browsers: ['PhantomJS'],
+                singleRun: true
             }
         },
         jshint: {
@@ -27,33 +50,36 @@ module.exports = function (grunt) {
                 boss: true,     // true: Tolerate assignments where comparisons would be expected
                 eqnull: true    // true: Tolerate use of `== null`
             },
-            src: '<%= js_files %>',
-            gruntfile: {
+            client: '<%= files.client.js %>',
+            server: {
                 options: {
                     node: true
                 },
-                files: {
-                    src: ['Gruntfile.js']
-                }
+                files: ['<%= files.server.js_config %>', '<%= files.server.js_tests %>']
             }
         },
         watch: {
-            php: {
-                files: '<%= php_files %>',
+            php_tests: {
+                files: '<%= files.server.php %>',
                 tasks: ['phpunit']
             },
-            js: {
-                files: '<%= js_files %>',
-                tasks: ['jshint:src']
+            js_tests: {
+                files: '<%= files.server.js_tests %>',
+                tasks: ['karma:unit:run']
+            },
+            js_lint: {
+                files: ['<%= files.server.js_config %>', '<%= files.server.js_tests %>', '<%= files.client.js %>'],
+                tasks: ['jshint']
             }
         }
     });
 
     grunt.loadNpmTasks('grunt-phpunit');
+    grunt.loadNpmTasks('grunt-karma');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-watch');
 
-    grunt.registerTask('test', ['jshint', 'phpunit']);
-    grunt.registerTask('default', ['jshint', 'phpunit']);
+    grunt.registerTask('test', ['phpunit', 'jshint', 'karma']);
+    grunt.registerTask('default', ['test']);
 
 };
