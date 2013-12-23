@@ -1,6 +1,7 @@
 /.idea
 /.vagrant
 /nbproject
+/node_modules
 /vendor
 phpunit.xml
 Vagrantfile
