@@ -11,3 +11,10 @@ matrix:
 
 install:
   - composer install --prefer-dist --dev
+
+script:
+  - mkdir -p build/logs
+  - phpunit -v --coverage-clover build/logs/clover.xml
+
+after_script:
+  - php vendor/bin/coveralls -v
