@@ -29,6 +29,7 @@
         "grunt-karma": "~0.6.2",
         "karma-commonjs": "0.0.4",
         "karma-mocha": "~0.1",
-        "karma-expect": "~1.0.0"
+        "karma-expect": "~1.0.0",
+        "load-grunt-tasks": "~0.2.1"
     }
 }
