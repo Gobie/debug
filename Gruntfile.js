@@ -1,4 +1,5 @@
 var JSHINT_DEFAULT = {
+    reporter: require('jshint-stylish'),
     curly: true,    // true: Require {} for every new block or scope
     eqeqeq: true,   // true: Require triple equals (===) for comparison
     immed: true,    // true: Require immediate invocations to be wrapped in parenthesis e.g. `(function () { } ());`
