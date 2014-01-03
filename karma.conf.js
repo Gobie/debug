@@ -10,11 +10,13 @@ module.exports = function (config) {
 
         // preprocessors
         preprocessors: {
+            'node_modules/highlight.js/*.js': ['commonjs'],
             'tests/**/*.test.js': ['commonjs']
         },
 
         // list of files / patterns to load in the browser
         files: [
+            'node_modules/highlight.js/*.js',
             'tests/**/*.test.js'
         ],
 
