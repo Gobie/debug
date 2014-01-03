@@ -76,15 +76,15 @@ module.exports = function (grunt) {
             },
             jshint_client: {
                 files: ['<%= files.client.js %>'],
-                tasks: ['jshint:client']
+                tasks: ['newer:jshint:client']
             },
             jshint_server_tests: {
                 files: ['<%= files.server.js_tests %>'],
-                tasks: ['jshint:server_tests']
+                tasks: ['newer:jshint:server_tests']
             },
             jshint_server_support: {
                 files: ['<%= files.server.js_support %>'],
-                tasks: ['jshint:server_support']
+                tasks: ['newer:jshint:server_support']
             }
         }
     });
