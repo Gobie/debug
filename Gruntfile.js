@@ -1,23 +1,3 @@
-var JSHINT_DEFAULT = {
-    reporter: require('jshint-stylish'),
-    curly: true,    // true: Require {} for every new block or scope
-    eqeqeq: true,   // true: Require triple equals (===) for comparison
-    immed: true,    // true: Require immediate invocations to be wrapped in parenthesis e.g. `(function () { } ());`
-    latedef: true,  // true: Require variables/functions to be defined before being used
-    newcap: true,   // true: Require capitalization of all constructor functions e.g. `new F()`
-    noarg: true,    // true: Prohibit use of `arguments.caller` and `arguments.callee`
-    sub: true,      // true: Tolerate using `[]` notation when it can still be expressed in dot notation
-    undef: true,    // true: Require all non-global variables to be declared (prevents global leaks)
-    boss: true,     // true: Tolerate assignments where comparisons would be expected
-    eqnull: true    // true: Tolerate use of `== null`
-}, JSHINT_BROWSER = {
-    browser: true,  // true: Defines globals exposed by modern browsers
-    node: false     // false: Doesn't define globals exposed by node.js
-}, JSHINT_NODE = {
-    browser: false, // false: Doesn't define globals exposed by modern browsers
-    node: true      // true: Defines globals exposed by node.js
-};
-
 module.exports = function (grunt) {
 
     require('time-grunt')(grunt);
@@ -61,17 +41,26 @@ module.exports = function (grunt) {
         },
 
         jshint: {
-            options: JSHINT_DEFAULT,
+            options: {
+                jshintrc: '.jshintrc',
+                reporter: require('jshint-stylish')
+            },
             client: {
-                options: JSHINT_BROWSER,
+                options: {
+                    browser: true
+                },
                 files: ['<%= files.client.js %>']
             },
             server_tests: {
-                options: JSHINT_NODE,
+                options: {
+                    node: true
+                },
                 files: ['<%= files.server.js_tests %>']
             },
             server_support: {
-                options: JSHINT_NODE,
+                options: {
+                    node: true
+                },
                 files: ['<%= files.server.js_support %>']
             }
         },
