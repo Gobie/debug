@@ -10,7 +10,7 @@ matrix:
     - php: hhvm
 
 install:
-  - composer install --prefer-dist --dev
+  - composer install --prefer-source --no-interaction --dev
 
 script:
   - mkdir -p build/logs
